@@ -6,7 +6,7 @@ import 'package:social_app/Core/Utlies/AppColors.dart';
 import 'package:social_app/Core/Utlies/AppStrings.dart';
 import 'package:social_app/Core/Utlies/FontStylesManager.dart';
 import 'package:social_app/Core/Utlies/Functions.dart';
-import 'package:social_app/Features/Login/Presentation/View/loginView.dart';
+import 'package:social_app/Features/Autontication/Presentation/View/loginView.dart';
 import 'package:social_app/Features/Welcme/Presentation/View/Widgets/customeButton.dart';
 import 'package:social_app/Features/Welcme/Presentation/View/Widgets/customeStack.dart';
 
@@ -28,8 +28,7 @@ class Welcomeviewbody extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                      'nslnl clancolnap acnaobofc aincoancocsac iansac ai ajcapinm"Nods wj0joa',
+                  Text(AppStrings.aboutApp,
                       textAlign: TextAlign.left,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 3,
@@ -40,8 +39,9 @@ class Welcomeviewbody extends StatelessWidget {
                   CustomeButton(
                     title: AppStrings.getStart,
                     onTap: () {
-                      Get.off(() => Loginview(),
-                          curve: Curves.easeIn, duration: Duration(seconds: 1));
+                      Get.off(
+                        () => Loginview(),
+                      );
                     },
                   )
                 ],
