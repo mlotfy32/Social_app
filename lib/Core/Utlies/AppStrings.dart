@@ -26,4 +26,5 @@ abstract class AppStrings {
   static String Code = 'Code';
   static String invalidCode = '    Invalid Code';
   static String validatecode = '    code can`t be less than 6 letters';
+  static String Something = 'Something went wrong please try again later';
 }

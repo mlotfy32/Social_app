@@ -70,7 +70,7 @@ abstract class helper {
         content: Material(
           color: Colors.transparent,
           child: Center(
-              child: Lottie.asset(Appassets.fail, width: 200, height: 200)),
+              child: Lottie.asset(Appassets.fail, width: 150, height: 150)),
         ));
   }
 }

@@ -14,8 +14,6 @@ abstract class Fontstylesmanager {
       fontSize: 18,
       color: Colors.white.withOpacity(0.5),
       fontWeight: FontWeight.w300);
-  static TextStyle textDialogStyle = TextStyle(
-      fontSize: 23,
-      color: Colors.white.withOpacity(0.5),
-      fontWeight: FontWeight.w400);
+  static TextStyle textDialogStyle =
+      TextStyle(fontSize: 23, color: Colors.white, fontWeight: FontWeight.w400);
 }
