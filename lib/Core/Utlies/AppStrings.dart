@@ -6,7 +6,7 @@ abstract class AppStrings {
   static String aboutApp =
       'Step into a new world of connection! Discover, share, and connect with new friends and family in innovative and secure ways. Try our app today and make every moment you connect special!';
   static String getStart = 'Get Start';
-  static String Media = 'Media.';
+  static String social = 'Social.';
   static String app = 'app';
   static List<String> singin_upList = ['Sing in', 'Sing Up'];
   static String email = 'Mail';
@@ -27,4 +27,8 @@ abstract class AppStrings {
   static String invalidCode = '    Invalid Code';
   static String validatecode = '    code can`t be less than 6 letters';
   static String Something = 'Something went wrong please try again later';
+  static String socialApp = 'Social.app';
+  static String noData = 'No Data to display';
+  static String search = 'search';
+  static List<String> tabBartext = ['Home', 'New Post', 'Chat', 'Profile'];
 }

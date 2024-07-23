@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:meta/meta.dart';
 import 'package:social_app/Core/Utlies/AppStrings.dart';
+import 'package:social_app/Core/Utlies/Constants.dart';
 import 'package:social_app/Core/Utlies/Functions.dart';
 import 'package:social_app/Features/Home/Presentation/View/homeView.dart';
 
@@ -20,8 +21,15 @@ class SingUpCubit extends Cubit<SingUpState> {
         email: email,
         password: Password,
       );
+      await Constants.usersCollection.add({
+        'userName': '$fristName $lastName',
+        'email': email,
+        'password': Password,
+        'userId': '${Constants.userId}'
+      });
       Get.back();
-      Get.to(() => Homeview(),
+      helper.snack(AppStrings.successlogin);
+      Get.offAll(() => Homeview(),
           curve: Curves.easeInCirc, duration: Duration(seconds: 1));
       print('Successfully signed up: ${userCredential.user?.email}');
     } on FirebaseAuthException catch (e) {

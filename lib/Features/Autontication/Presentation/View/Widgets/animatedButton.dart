@@ -44,9 +44,8 @@ class Animatedbutton extends StatelessWidget {
                   formState == 'login' ? AppStrings.lohin : AppStrings.singUp,
               onTap: () {
                 if (formState == 'login') {
-                  helper.loading(AppStrings.loading);
-
                   if (formKey.currentState!.validate()) {
+                    helper.loading(AppStrings.loading);
                     BlocProvider.of<SinginCubit>(context)
                         .sigin(email.text, password.text);
                     BlocProvider.of<SinginCubit>(context).slider();
@@ -54,7 +53,6 @@ class Animatedbutton extends StatelessWidget {
                 } else {
                   if (formKey.currentState!.validate()) {
                     helper.loading(AppStrings.loading);
-
                     BlocProvider.of<SingUpCubit>(context).singUp(email.text,
                         password.text, freistName!.text, lastName!.text);
                     BlocProvider.of<SinginCubit>(context).slider();

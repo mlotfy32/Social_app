@@ -16,4 +16,6 @@ abstract class Fontstylesmanager {
       fontWeight: FontWeight.w300);
   static TextStyle textDialogStyle =
       TextStyle(fontSize: 23, color: Colors.white, fontWeight: FontWeight.w400);
+  static TextStyle textnotificationStyle = TextStyle(
+      fontSize: 12, color: Colors.blueAccent, fontWeight: FontWeight.w300);
 }

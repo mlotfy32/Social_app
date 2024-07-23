@@ -3,4 +3,5 @@ abstract class Appassets {
   static String logo = 'assets/logo.png';
   static String success = 'assets/success.json';
   static String fail = 'assets/fail.json';
+  static String noData = 'assets/noData.json';
 }

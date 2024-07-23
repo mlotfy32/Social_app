@@ -2,7 +2,13 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:meta/meta.dart';
+import 'package:social_app/Core/Utlies/AppStrings.dart';
+import 'package:social_app/Core/Utlies/Functions.dart';
+import 'package:social_app/Features/Home/Presentation/View/homeView.dart';
 
 part 'singin_state.dart';
 
@@ -19,19 +25,30 @@ class SinginCubit extends Cubit<SinginState> {
         email: email,
         password: password,
       );
-      print('Successfully signed in');
+      Get.back();
+      helper.snack(AppStrings.successlogin);
+      Get.offAll(() => Homeview(),
+          curve: Curves.easeInCirc, duration: Duration(seconds: 1));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-credential') {
-        print('Invalid credential. Please check your email and password.');
+        Get.back();
+
+        helper.fail('Please check your email and password.');
       } else if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        Get.back();
+
+        helper.fail('No user found for that email.');
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided.');
+        helper.fail('Wrong email or password');
       } else {
-        print('Error: ${e.code}');
+        Get.back();
+
+        helper.fail(AppStrings.Something);
       }
     } catch (e) {
-      print('Error: $e');
+      Get.back();
+
+      helper.fail(AppStrings.Something);
     }
   }
 

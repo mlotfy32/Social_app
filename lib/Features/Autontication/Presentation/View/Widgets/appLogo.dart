@@ -26,7 +26,7 @@ class Applogo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                AppStrings.Media,
+                AppStrings.social,
                 style: Fontstylesmanager.buttonTitleStyle,
               ),
               Text(

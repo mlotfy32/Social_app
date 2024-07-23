@@ -5,6 +5,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:social_app/Core/Utlies/AppAssets.dart';
 import 'package:social_app/Core/Utlies/AppColors.dart';
+import 'package:social_app/Core/Utlies/AppStrings.dart';
 import 'package:social_app/Core/Utlies/FontStylesManager.dart';
 
 abstract class helper {
@@ -72,6 +73,22 @@ abstract class helper {
           child: Center(
               child: Lottie.asset(Appassets.fail, width: 150, height: 150)),
         ));
+  }
+
+  static void snack(String title) {
+    Get.snackbar(
+      '',
+      snackPosition: SnackPosition.BOTTOM,
+      '',
+      titleText: Text(
+        AppStrings.socialApp,
+        style: Fontstylesmanager.welcomeTitleStyle.copyWith(fontSize: 20),
+      ),
+      messageText: Text(
+        title,
+        style: Fontstylesmanager.welcomeSubTitleStyle.copyWith(fontSize: 17),
+      ),
+    );
   }
 }
 /*
