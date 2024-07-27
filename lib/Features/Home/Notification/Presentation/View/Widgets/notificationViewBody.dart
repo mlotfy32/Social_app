@@ -19,7 +19,8 @@ class Notificationviewbody extends StatelessWidget {
           ? Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: StreamBuilder(
-                stream: Constants.notificationCollection
+                stream: Constants()
+                    .notificationCollection
                     .orderBy('time', descending: true)
                     .snapshots(),
                 builder: (context, snapshot) {

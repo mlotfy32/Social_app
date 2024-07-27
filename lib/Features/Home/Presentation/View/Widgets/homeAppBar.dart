@@ -23,7 +23,7 @@ class Homeappbar extends StatefulWidget {
 class _HomeappbarState extends State<Homeappbar> {
   @override
   void initState() {
-    BlocProvider.of<NotificationCubit>(context).isContainNotification();
+    // BlocProvider.of<NotificationCubit>(context).isContainNotification();
     super.initState();
   }
 

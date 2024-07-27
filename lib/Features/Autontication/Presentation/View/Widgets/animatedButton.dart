@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:social_app/Core/Utlies/AppColors.dart';
 import 'package:social_app/Core/Utlies/AppStrings.dart';
 import 'package:social_app/Core/Utlies/Functions.dart';
 import 'package:social_app/Features/Autontication/Presentation/ViewModel/Autiontication/SingInCubit/singin_cubit.dart';
@@ -40,19 +41,20 @@ class Animatedbutton extends StatelessWidget {
             curve: Curves.easeInOutCirc,
             offset: offset == false ? Offset(0, 0) : Offset(5, -800),
             child: CustomeButton(
+              color: AppColors.buttonColor.withOpacity(0.8),
               title:
                   formState == 'login' ? AppStrings.lohin : AppStrings.singUp,
               onTap: () {
                 if (formState == 'login') {
                   if (formKey.currentState!.validate()) {
-                    helper.loading(AppStrings.loading);
+                    helper.loading();
                     BlocProvider.of<SinginCubit>(context)
                         .sigin(email.text, password.text);
                     BlocProvider.of<SinginCubit>(context).slider();
                   }
                 } else {
                   if (formKey.currentState!.validate()) {
-                    helper.loading(AppStrings.loading);
+                    helper.loading();
                     BlocProvider.of<SingUpCubit>(context).singUp(email.text,
                         password.text, freistName!.text, lastName!.text);
                     BlocProvider.of<SinginCubit>(context).slider();

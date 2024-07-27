@@ -12,11 +12,11 @@ part 'notification_state.dart';
 class NotificationCubit extends Cubit<NotificationState> {
   NotificationCubit() : super(NotificationInitial());
   isContainNotification() async {
-    Map<String, dynamic> map = {'name': 'mhmd', 'phone': 01275348383};
-    await Constants.notificationCollection.add(map);
-    QuerySnapshot fetchData = await Constants.notificationCollection.get();
+    //   Map<String, dynamic> map = {'name': 'mhmd', 'phone': 01275348383};
+    //   await Constants.notificationCollection.add(map);
+    QuerySnapshot fetchData = await Constants().notificationCollection.get();
     QuerySnapshot snapshot =
-        await Constants.notificationCollection.limit(1).get();
+        await Constants().notificationCollection.limit(1).get();
     bool hasData = await snapshot.docs.isEmpty;
     if (hasData != true) {
       List<QueryDocumentSnapshot> Data = fetchData.docs;

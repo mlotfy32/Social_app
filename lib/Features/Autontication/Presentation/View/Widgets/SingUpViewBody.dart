@@ -45,6 +45,7 @@ class _SingupviewbodyState extends State<Singupviewbody> {
         child: Column(
           children: [
             Emailform(
+              email: false,
               title: AppStrings.fristName,
               icon: Icon(
                 size: 22,
@@ -54,6 +55,7 @@ class _SingupviewbodyState extends State<Singupviewbody> {
               controller: fristName,
             ),
             Emailform(
+              email: false,
               title: AppStrings.lastName,
               icon: Icon(
                 size: 22,
@@ -63,6 +65,7 @@ class _SingupviewbodyState extends State<Singupviewbody> {
               controller: lastName,
             ),
             Emailform(
+              email: true,
               title: AppStrings.email,
               icon: Icon(
                 size: 22,

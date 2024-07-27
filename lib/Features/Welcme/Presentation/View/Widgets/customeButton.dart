@@ -5,9 +5,11 @@ import 'package:social_app/Core/Utlies/FontStylesManager.dart';
 import 'package:social_app/Core/Utlies/Functions.dart';
 
 class CustomeButton extends StatelessWidget {
-  const CustomeButton({super.key, required this.title, this.onTap});
+  const CustomeButton(
+      {super.key, required this.title, this.onTap, required this.color});
   final void Function()? onTap;
   final String title;
+  final Color color;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -23,8 +25,7 @@ class CustomeButton extends StatelessWidget {
           ),
         ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: AppColors.buttonColor.withOpacity(0.8)),
+            borderRadius: BorderRadius.circular(15), color: color),
       ),
     );
   }

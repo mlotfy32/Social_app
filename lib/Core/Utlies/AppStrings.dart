@@ -10,6 +10,7 @@ abstract class AppStrings {
   static String app = 'app';
   static List<String> singin_upList = ['Sing in', 'Sing Up'];
   static String email = 'Mail';
+  static String invaledEmail = 'Invaled email';
   static String password = 'Password';
   static String forgetPass = 'Forget Password';
   static String validatepass = 'password can`t be less than 8 letters';
@@ -31,4 +32,8 @@ abstract class AppStrings {
   static String noData = 'No Data to display';
   static String search = 'search';
   static List<String> tabBartext = ['Home', 'New Post', 'Chat', 'Profile'];
+  static String mind = 'what`s in your mind';
+  static String share = 'Share';
+  static String sharingPost = 'Sharing your post';
+  static String postAdded = 'your post added successfully';
 }

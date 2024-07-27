@@ -36,6 +36,7 @@ class LogInContent extends StatelessWidget {
       child: Column(
         children: [
           Emailform(
+            email: false,
             title: AppStrings.email,
             icon: Icon(
               size: 22,
@@ -66,6 +67,7 @@ class LogInContent extends StatelessWidget {
                     child: Column(
                       children: [
                         Emailform(
+                          email: true,
                           controller: email,
                           title: AppStrings.email,
                           icon: Icon(
@@ -76,6 +78,7 @@ class LogInContent extends StatelessWidget {
                         ),
                         Spacer(),
                         CustomeButton(
+                          color: AppColors.buttonColor.withOpacity(0.8),
                           title: AppStrings.getCode,
                           onTap: () {
                             int randomNumber = Random().nextInt(1000000);

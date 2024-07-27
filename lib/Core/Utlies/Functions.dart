@@ -29,12 +29,12 @@ abstract class helper {
     return width;
   }
 
-  static void loading(String title) {
+  static void loading() {
     Get.defaultDialog(
         radius: 10,
         titlePadding: EdgeInsets.all(20),
         backgroundColor: AppColors.primaryColor,
-        title: title,
+        title: AppStrings.loading,
         titleStyle: Fontstylesmanager.textDialogStyle,
         content: Material(
           color: Colors.transparent,

@@ -4,4 +4,6 @@ abstract class Appassets {
   static String success = 'assets/success.json';
   static String fail = 'assets/fail.json';
   static String noData = 'assets/noData.json';
+  static String profile =
+      'https://cdn-icons-png.flaticon.com/512/149/149071.png';
 }

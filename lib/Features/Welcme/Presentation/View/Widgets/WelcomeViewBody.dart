@@ -37,6 +37,7 @@ class Welcomeviewbody extends StatelessWidget {
                   Spacer(),
                   //FixResponsiveButton
                   CustomeButton(
+                    color: AppColors.buttonColor.withOpacity(0.8),
                     title: AppStrings.getStart,
                     onTap: () {
                       Get.off(

@@ -97,6 +97,7 @@ class Getcode extends StatelessWidget {
             ),
             Spacer(),
             CustomeButton(
+              color: AppColors.buttonColor.withOpacity(0.8),
               title: 'Done',
               onTap: () {
                 if (_textEditingController.text.isNotEmpty &&
