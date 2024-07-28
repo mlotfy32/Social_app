@@ -36,7 +36,7 @@ class LogInContent extends StatelessWidget {
       child: Column(
         children: [
           Emailform(
-            email: false,
+            email: true,
             title: AppStrings.email,
             icon: Icon(
               size: 22,

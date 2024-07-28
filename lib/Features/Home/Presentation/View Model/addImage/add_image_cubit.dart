@@ -20,8 +20,9 @@ class AddImageCubit extends Cubit<AddImageState> {
     if (source == 'camera') {
       try {
         picked = await ImagePicker().pickImage(source: ImageSource.camera);
-        emit(AddImageLoading());
         if (picked != null) {
+          emit(AddImageLoading());
+
           _image = File(picked.path);
           var randome = Random().nextInt(1000000);
           imagename = '$randome' + basename(picked.path);
@@ -39,9 +40,10 @@ class AddImageCubit extends Cubit<AddImageState> {
     } else {
       try {
         picked = await ImagePicker().pickImage(source: ImageSource.gallery);
-        emit(AddImageLoading());
 
         if (picked != null) {
+          emit(AddImageLoading());
+
           _image = File(picked.path);
           var randome = Random().nextInt(1000000);
           imagename = '$randome' + basename(picked.path);

@@ -18,37 +18,57 @@ class Postdetailes extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-            alignment: Alignment.topLeft,
-            width: helper.getwidth(0.6, context),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.blue.withOpacity(0.1)),
-            height: helper.getHeight(0.075, context),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage: NetworkImage(
-                      snapshot.data!.docs[Index].get('profilePic') == null
-                          ? Appassets.profile
-                          : snapshot.data!.docs[Index].get('profilePic')),
-                ),
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Center(
-                    child: Text(
-                      '${snapshot.data!.docs[Index].get('fristName')} ${snapshot.data!.docs[Index].get('lastName')}',
-                      style: Fontstylesmanager.welcomeTitleStyle
-                          .copyWith(fontSize: 18),
-                      overflow: TextOverflow.ellipsis,
-                    ),
+          FittedBox(
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 7),
+              alignment: Alignment.topLeft,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(colors: [
+                    Colors.blue.withOpacity(0.2),
+                    Colors.blue.withOpacity(0.1),
+                    Colors.blue.withOpacity(0.01),
+                  ])),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CircleAvatar(
+                    radius: 23,
+                    backgroundImage: NetworkImage(
+                        snapshot.data!.docs[Index].get('profilePic') == null
+                            ? Appassets.profile
+                            : snapshot.data!.docs[Index].get('profilePic')),
                   ),
-                  Text(
-                      '${Jiffy.parse(snapshot.data!.docs[Index].get('time')).fromNow()}')
-                ]),
-              ],
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: IntrinsicWidth(
+                            child: SizedBox(
+                              width: helper.getwidth(0.55, context),
+                              child: Text(
+                                '${snapshot.data!.docs[Index].get('fristName')} ${snapshot.data!.docs[Index].get('lastName')}',
+                                style: Fontstylesmanager.welcomeTitleStyle
+                                    .copyWith(fontSize: 18),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            overflow: TextOverflow.ellipsis,
+                            '${Jiffy.parse(snapshot.data!.docs[Index].get('time')).fromNow()}',
+                          ),
+                        )
+                      ]),
+                ],
+              ),
             ),
           ),
           Customeiconbutton(

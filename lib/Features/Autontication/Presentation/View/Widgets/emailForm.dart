@@ -29,7 +29,8 @@ class Emailform extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
       child: TextFormField(
         onChanged: onChanged,
-        keyboardType: TextInputType.emailAddress,
+        keyboardType:
+            email == true ? TextInputType.emailAddress : TextInputType.text,
         controller: controller,
         validator: (value) {
           if (value == '') return AppStrings.validateemail;

@@ -16,7 +16,11 @@ class Homeview extends StatelessWidget {
       child: Stack(
         children: [
           SizedBox(
-              height: helper.getscreenHeight(context), child: Homeviewbody()),
+              height: helper.getscreenHeight(context),
+              child: BlocProvider<ReactCommentCubit>(
+                create: (context) => ReactCommentCubit(),
+                child: Homeviewbody(),
+              )),
           BlocProvider<TabBarCubit>(
             create: (context) => TabBarCubit(),
             child: Customebuttombar(),

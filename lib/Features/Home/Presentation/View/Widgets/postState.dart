@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:social_app/Core/Utlies/Constants.dart';
 import 'package:social_app/Core/Utlies/FontStylesManager.dart';
 import 'package:social_app/Features/Home/Presentation/View%20Model/react_comment/react_comment_cubit.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/customeIconButton.dart';
@@ -28,13 +29,16 @@ class Poststate extends StatefulWidget {
 class _PoststateState extends State<Poststate> {
   @override
   void initState() {
-    BlocProvider.of<ReactCommentCubit>(context)
-        .isLike(snabshot: widget.snapshot, Index: widget.Index);
+    BlocProvider.of<ReactCommentCubit>(context).isLike(
+        snabshot: widget.snapshot,
+        Index: widget.Index,
+        userId: Constants().userId);
     super.initState();
   }
 
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: Duration(seconds: 2),
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15), color: Colors.white10),
@@ -61,11 +65,14 @@ class _PoststateState extends State<Poststate> {
           ),
           BlocBuilder<ReactCommentCubit, ReactCommentState>(
             builder: (context, state) {
-              return ReactComment(
-                id: widget.snapshot.data!.docs[widget.Index].id,
-                likes: widget.likes,
-                Index: widget.Index,
-                snapshot: widget.snapshot,
+              return Align(
+                alignment: Alignment.bottomLeft,
+                child: ReactComment(
+                  id: widget.snapshot.data!.docs[widget.Index].id,
+                  likes: widget.likes,
+                  Index: widget.Index,
+                  snapshot: widget.snapshot,
+                ),
               );
             },
           )

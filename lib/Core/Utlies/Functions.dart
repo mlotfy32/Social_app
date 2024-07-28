@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -6,6 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:social_app/Core/Utlies/AppAssets.dart';
 import 'package:social_app/Core/Utlies/AppColors.dart';
 import 'package:social_app/Core/Utlies/AppStrings.dart';
+import 'package:social_app/Core/Utlies/Constants.dart';
 import 'package:social_app/Core/Utlies/FontStylesManager.dart';
 
 abstract class helper {
@@ -90,26 +93,36 @@ abstract class helper {
       ),
     );
   }
-}
-/*
- String email = _emailController.text.trim();
-    ActionCodeSettings actionCodeSettings = ActionCodeSettings(
-      url: 'https://<your-app-id>.firebaseapp.com', // رابط إعادة التوجيه
-      handleCodeInApp: true,
-      iOSBundleId: 'com.example.ios',
-      androidPackageName: 'com.example.android',
-      androidInstallApp: true,
-      androidMinimumVersion: '12',
-    );
 
-    try {
-      await FirebaseAuth.instance.sendSignInLinkToEmail(
-        email: email,
-        actionCodeSettings: actionCodeSettings,
-      );
-      print('Sign-in link sent to $email');
-      // حفظ البريد الإلكتروني لاستخدامه لاحقًا عند التحقق من الرابط
-    } catch (e) {
-      print('Error: $e');
-    }
-*/
+  static Future<void> getLikes(
+      {required oldsnapshot,
+      required int Index,
+      required List likes,
+      required BuildContext context}) async {
+    Get.dialog(Material(
+      color: Colors.transparent,
+      child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.blueGrey.withOpacity(0.5)),
+          margin: EdgeInsets.symmetric(vertical: 80, horizontal: 10),
+          height: helper.getHeight(0.7, context),
+          width: helper.getscreenWidth(context),
+          child: ListView.separated(
+              itemBuilder: (context, index) {
+                var key = likes[index].keys;
+                key = key.toString().split('(');
+                key = key[1].toString().split(')');
+                log('${key[0]}');
+
+                return Text(
+                  '${likes[index]['${key[0]}'][0]}',
+                  style: Fontstylesmanager.welcomeSubTitleStyle,
+                );
+              },
+              separatorBuilder: (context, index) => Divider(),
+              itemCount: likes.length)),
+    ));
+  }
+}

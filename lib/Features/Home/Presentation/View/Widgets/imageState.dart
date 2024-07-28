@@ -1,6 +1,12 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:social_app/Core/Utlies/Constants.dart';
 import 'package:social_app/Core/Utlies/FontStylesManager.dart';
 import 'package:social_app/Core/Utlies/Functions.dart';
 import 'package:social_app/Features/Home/Presentation/View%20Model/react_comment/react_comment_cubit.dart';
@@ -8,8 +14,12 @@ import 'package:social_app/Features/Home/Presentation/View/Widgets/postDetailes.
 import 'package:social_app/Features/Home/Presentation/View/Widgets/react_comment.dart';
 
 class Imagestate extends StatefulWidget {
-  const Imagestate(
-      {super.key, required this.Index, this.snapshot, required this.likes});
+  const Imagestate({
+    super.key,
+    required this.Index,
+    this.snapshot,
+    required this.likes,
+  });
   final int Index;
   final dynamic snapshot;
   final int likes;
@@ -21,20 +31,44 @@ class Imagestate extends StatefulWidget {
 class _ImagestateState extends State<Imagestate> {
   @override
   void initState() {
-    BlocProvider.of<ReactCommentCubit>(context)
-        .isLike(snabshot: widget.snapshot, Index: widget.Index);
+    BlocProvider.of<ReactCommentCubit>(context).isLike(
+        snabshot: widget.snapshot,
+        Index: widget.Index,
+        userId: Constants().userId);
     super.initState();
   }
 
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+    return AnimatedContainer(
+      duration: Duration(seconds: 2),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15), color: Colors.white10),
-      child: Stack(
+      child: Column(
         children: [
+          Postdetailes(
+            Index: widget.Index,
+            snapshot: widget.snapshot,
+          ),
+          SizedBox(
+            height: 10,
+          ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Get.bottomSheet(
+                  isScrollControlled: true,
+                  Container(
+                    color: Colors.grey[900],
+                    height: helper.getscreenHeight(context),
+                    width: helper.getscreenWidth(context),
+                    child: PhotoView(
+                        filterQuality: FilterQuality.high,
+                        imageProvider: NetworkImage(
+                            scale: 200,
+                            widget.snapshot.data!.docs[widget.Index]
+                                .get('imageUrl'))),
+                  ));
+            },
             child: Container(
               width: helper.getscreenWidth(context),
               height: helper.getHeight(0.4, context),
@@ -47,25 +81,18 @@ class _ImagestateState extends State<Imagestate> {
                       fit: BoxFit.cover)),
             ),
           ),
-          Postdetailes(
-            Index: widget.Index,
-            snapshot: widget.snapshot,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: helper.getHeight(0.34, context)),
-            child: BlocBuilder<ReactCommentCubit, ReactCommentState>(
-              builder: (context, state) {
-                return ReactComment(
+          BlocBuilder<ReactCommentCubit, ReactCommentState>(
+            builder: (context, state) {
+              return Align(
+                alignment: Alignment.topLeft,
+                child: ReactComment(
                   id: widget.snapshot.data!.docs[widget.Index].id,
                   likes: widget.likes,
                   Index: widget.Index,
                   snapshot: widget.snapshot,
-                );
-              },
-            ),
+                ),
+              );
+            },
           )
         ],
       ),

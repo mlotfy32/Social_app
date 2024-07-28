@@ -11,6 +11,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:social_app/Core/Utlies/AppAssets.dart';
 import 'package:social_app/Core/Utlies/AppColors.dart';
 import 'package:social_app/Core/Utlies/AppStrings.dart';
@@ -39,9 +40,175 @@ class _BottomsheetcontentState extends State<Bottomsheetcontent> {
   double opacity = 0.5;
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SetPostCubit, SetPostState>(
-      listener: (context, state) {
-        if (state is SetPostLoading) {
+    return BlocBuilder<SetPostCubit, SetPostState>(
+      builder: (context, state) => ModalProgressHUD(
+        inAsyncCall: state is SetPostLoading ? true : false,
+        child: Scaffold(
+          body: Container(
+            padding: EdgeInsets.symmetric(vertical: 30),
+            width: helper.getscreenWidth(context),
+            // height: helper.getscreenHeight(context),
+            child: ListView(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Emailform(
+                    email: false,
+                    keyboardType: TextInputType.text,
+                    onChanged: (value) {
+                      if (value == null || value.isEmpty || value == '') {
+                        BlocProvider.of<AddTitleCubit>(context).hasTitle(false);
+                      } else {
+                        BlocProvider.of<AddTitleCubit>(context).hasTitle(true);
+                      }
+                    },
+                    controller: textEditingController,
+                    title: AppStrings.mind,
+                    icon: Icon(FontAwesomeIcons.faceLaugh)),
+                Container(),
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () async {
+                          BlocProvider.of<AddImageCubit>(context)
+                              .addImage('camera');
+                        },
+                        icon: Icon(
+                          FontAwesomeIcons.cameraRetro,
+                          color: AppColors.buttonColor,
+                          size: 25,
+                        )),
+                    IconButton(
+                        onPressed: () {
+                          BlocProvider.of<AddImageCubit>(context)
+                              .addImage('gallery');
+                        },
+                        icon: Icon(
+                          FontAwesomeIcons.images,
+                          color: AppColors.buttonColor,
+                          size: 25,
+                        )),
+                    IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          FontAwesomeIcons.video,
+                          color: AppColors.buttonColor,
+                          size: 25,
+                        )),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                BlocConsumer<AddImageCubit, AddImageState>(
+                  listener: (context, state) {
+                    if (state is AddImageSuccess) {
+                      imageUrl = state.imageUrl;
+                      hasImage = true;
+                    }
+                  },
+                  builder: (context, state) {
+                    return state is AddImageLoading
+                        ? Center(
+                            child: LoadingAnimationWidget.inkDrop(
+                              color: AppColors.buttonColor,
+                              size: 70,
+                            ),
+                          )
+                        : state is AddImageSuccess
+                            ? Container(
+                                width: helper.getwidth(0.8, context),
+                                height: helper.getHeight(0.5, context),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    image: DecorationImage(
+                                        image: NetworkImage(imageUrl),
+                                        fit: BoxFit.cover)),
+                              )
+                            : state is AddImageFailure
+                                ? Center(
+                                    child: Column(
+                                    children: [
+                                      Lottie.asset(Appassets.fail,
+                                          height:
+                                              helper.getHeight(0.2, context),
+                                          width: helper.getwidth(0.5, context)),
+                                      Text(
+                                        state.error,
+                                        style:
+                                            Fontstylesmanager.textDialogStyle,
+                                      )
+                                    ],
+                                  ))
+                                : Container();
+                  },
+                ),
+                BlocConsumer<AddTitleCubit, AddTitleState>(
+                  listener: (context, state) {
+                    if (state is AddTitle) {
+                      if (state.hasTitle == true) {
+                        opacity = 1;
+                      } else {
+                        opacity = 0.5;
+                      }
+                    }
+                  },
+                  builder: (context, state) {
+                    return BlocConsumer<AddImageCubit, AddImageState>(
+                      listener: (context, state) {
+                        if (state is AddImageSuccess) {
+                          hasImage = true;
+                          opacity = 1;
+                          imageUrl = state.imageUrl;
+                        }
+                      },
+                      builder: (context, state) {
+                        return AnimatedOpacity(
+                          duration: Duration(milliseconds: 1200),
+                          opacity: opacity,
+                          child: CustomeButton(
+                              color: AppColors.buttonColor.withOpacity(0.8),
+                              title: AppStrings.share,
+                              onTap: opacity == 0.5 && hasImage == false
+                                  ? null
+                                  : () async {
+                                      if (hasImage == false &&
+                                          textEditingController.text != '') {
+                                        BlocProvider.of<SetPostCubit>(context)
+                                            .addNewPost(
+                                                title:
+                                                    textEditingController.text,
+                                                context: context);
+                                      } else if (hasImage == true &&
+                                          textEditingController.text == '') {
+                                        BlocProvider.of<SetPostCubit>(context)
+                                            .addNewImage(imageUrl: imageUrl);
+                                      } else {
+                                        BlocProvider.of<SetPostCubit>(context)
+                                            .addNewPostimage(
+                                                title:
+                                                    textEditingController.text,
+                                                imageUrl: imageUrl);
+                                      }
+                                    }),
+                        );
+                      },
+                    );
+                  },
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+/*
+   if (state is SetPostLoading) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(
                   duration: Duration(minutes: 10),
@@ -75,157 +242,6 @@ class _BottomsheetcontentState extends State<Bottomsheetcontent> {
                   )))
               .closed;
         }
-      },
-      child: Scaffold(
-        body: Container(
-          padding: EdgeInsets.symmetric(vertical: 30),
-          width: helper.getscreenWidth(context),
-          height: helper.getscreenHeight(context),
-          child: Column(
-            children: [
-              Emailform(
-                  email: false,
-                  onChanged: (value) {
-                    if (value == null || value.isEmpty || value == '') {
-                      BlocProvider.of<AddTitleCubit>(context).hasTitle(false);
-                    } else {
-                      BlocProvider.of<AddTitleCubit>(context).hasTitle(true);
-                    }
-                  },
-                  controller: textEditingController,
-                  title: AppStrings.mind,
-                  icon: Icon(FontAwesomeIcons.faceLaugh)),
-              Row(
-                children: [
-                  IconButton(
-                      onPressed: () async {
-                        BlocProvider.of<AddImageCubit>(context)
-                            .addImage('camera');
-                      },
-                      icon: Icon(
-                        FontAwesomeIcons.cameraRetro,
-                        color: AppColors.buttonColor,
-                        size: 25,
-                      )),
-                  IconButton(
-                      onPressed: () {
-                        BlocProvider.of<AddImageCubit>(context)
-                            .addImage('gallery');
-                      },
-                      icon: Icon(
-                        FontAwesomeIcons.images,
-                        color: AppColors.buttonColor,
-                        size: 25,
-                      )),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        FontAwesomeIcons.video,
-                        color: AppColors.buttonColor,
-                        size: 25,
-                      )),
-                ],
-              ),
-              BlocConsumer<AddImageCubit, AddImageState>(
-                listener: (context, state) {
-                  if (state is AddImageSuccess) {
-                    imageUrl = state.imageUrl;
-                    hasImage = true;
-                  }
-                },
-                builder: (context, state) {
-                  return state is AddImageLoading
-                      ? Center(
-                          child: LoadingAnimationWidget.inkDrop(
-                            color: AppColors.buttonColor,
-                            size: 70,
-                          ),
-                        )
-                      : state is AddImageSuccess
-                          ? Container(
-                              width: helper.getwidth(0.8, context),
-                              height: helper.getHeight(0.5, context),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  image: DecorationImage(
-                                      image: NetworkImage(imageUrl))),
-                            )
-                          : state is AddImageFailure
-                              ? Center(
-                                  child: Column(
-                                  children: [
-                                    Lottie.asset(Appassets.fail,
-                                        height: helper.getHeight(0.2, context),
-                                        width: helper.getwidth(0.5, context)),
-                                    Text(
-                                      state.error,
-                                      style: Fontstylesmanager.textDialogStyle,
-                                    )
-                                  ],
-                                ))
-                              : Container();
-                },
-              ),
-              BlocConsumer<AddTitleCubit, AddTitleState>(
-                listener: (context, state) {
-                  if (state is AddTitle) {
-                    if (state.hasTitle == true) {
-                      opacity = 1;
-                    } else {
-                      opacity = 0.5;
-                    }
-                  }
-                },
-                builder: (context, state) {
-                  return BlocConsumer<AddImageCubit, AddImageState>(
-                    listener: (context, state) {
-                      if (state is AddImageSuccess) {
-                        hasImage = true;
-                        opacity = 1;
-                        imageUrl = state.imageUrl;
-                      }
-                    },
-                    builder: (context, state) {
-                      return AnimatedOpacity(
-                        duration: Duration(milliseconds: 1200),
-                        opacity: opacity,
-                        child: CustomeButton(
-                            color: AppColors.buttonColor.withOpacity(0.8),
-                            title: AppStrings.share,
-                            onTap: opacity == 0.5 && hasImage == false
-                                ? null
-                                : () async {
-                                    if (hasImage == false &&
-                                        textEditingController.text != '') {
-                                      BlocProvider.of<SetPostCubit>(context)
-                                          .addNewPost(
-                                              title:
-                                                  textEditingController.text);
-                                    } else if (hasImage == true &&
-                                        textEditingController.text == '') {
-                                      BlocProvider.of<SetPostCubit>(context)
-                                          .addNewImage(imageUrl: imageUrl);
-                                    } else {
-                                      BlocProvider.of<SetPostCubit>(context)
-                                          .addNewPostimage(
-                                              title: textEditingController.text,
-                                              imageUrl: imageUrl);
-                                    }
-                                  }),
-                      );
-                    },
-                  );
-                },
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-/*
-  
 */
 
 

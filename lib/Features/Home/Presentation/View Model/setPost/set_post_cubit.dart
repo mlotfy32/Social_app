@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:meta/meta.dart';
@@ -15,8 +16,9 @@ class SetPostCubit extends Cubit<SetPostState> {
   SetPostCubit() : super(SetPostInitial());
   addNewPost({
     required String title,
+    required BuildContext context,
   }) async {
-    emit(SetPostLoading(loading: AppStrings.postAdded));
+    emit(SetPostLoading(loading: AppStrings.sharingPost));
 
     try {
       var profilePi = await profilePic!.get('profilePic');
@@ -53,7 +55,7 @@ class SetPostCubit extends Cubit<SetPostState> {
     required String title,
     required String imageUrl,
   }) async {
-    emit(SetPostLoading(loading: AppStrings.postAdded));
+    emit(SetPostLoading(loading: AppStrings.sharingPost));
     try {
       var profilePi = await profilePic!.get('profilePic');
       var name1 = await fristname!.get('fristName');
