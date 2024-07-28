@@ -9,6 +9,7 @@ import 'package:social_app/Core/Utlies/Constants.dart';
 import 'package:social_app/Core/Utlies/Functions.dart';
 import 'package:social_app/Features/Home/Notification/Presentation/View%20Model/Notification_Cubit/notification_cubit.dart';
 import 'package:social_app/Features/Home/Presentation/View%20Model/isScroll/is_scroll_cubit.dart';
+import 'package:social_app/Features/Home/Presentation/View%20Model/react_comment/react_comment_cubit.dart';
 import 'package:social_app/Features/Home/Presentation/View%20Model/tabBar_Cubit/tab_bar_cubit.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/customeButtomBar.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/customeForm.dart';
@@ -74,30 +75,63 @@ class _HomeviewbodyState extends State<Homeviewbody> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.separated(
+                      separatorBuilder: (context, index) {
+                        return Container(
+                          margin:
+                              EdgeInsets.symmetric(horizontal: 50, vertical: 5),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              gradient: LinearGradient(colors: [
+                                Color(0xffFF4E50),
+                                Color(0xffF9D423)
+                              ])),
+                        );
+                      },
                       padding: EdgeInsets.all(0),
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) =>
-                          snapshot.data!.docs[index].get('postState') == 'post'
-                              ? Poststate(Index: index, snapshot: snapshot)
-                              : snapshot.data!.docs[index].get('postState') ==
-                                      'image'
-                                  ? Imagestate(snapshot: snapshot, Index: index)
-                                  : Imagepoststate(
-                                      Index: index,
-                                      snapshot: snapshot,
-                                    ),
-                      separatorBuilder: (context, index) => Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 50, vertical: 5),
-                            height: 1,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                gradient: LinearGradient(colors: [
-                                  Color(0xffFF4E50),
-                                  Color(0xffF9D423)
-                                ])),
-                          ),
+                      itemBuilder: (context, index) {
+                        if (snapshot.data!.docs[index].get('postState') ==
+                            'post') {
+                          int likes =
+                              snapshot.data!.docs[index].get('likes').length;
+
+                          return BlocProvider<ReactCommentCubit>(
+                            create: (context) => ReactCommentCubit(),
+                            child: Poststate(
+                              likes: likes,
+                              Index: index,
+                              snapshot: snapshot,
+                            ),
+                          );
+                        } else if (snapshot.data!.docs[index]
+                                .get('postState') ==
+                            'image') {
+                          int likes =
+                              snapshot.data!.docs[index].get('likes').length;
+
+                          return BlocProvider<ReactCommentCubit>(
+                            create: (context) => ReactCommentCubit(),
+                            child: Imagestate(
+                              likes: likes,
+                              snapshot: snapshot,
+                              Index: index,
+                            ),
+                          );
+                        } else {
+                          int likes =
+                              snapshot.data!.docs[index].get('likes').length;
+
+                          return BlocProvider<ReactCommentCubit>(
+                            create: (context) => ReactCommentCubit(),
+                            child: Imagepoststate(
+                              likes: likes,
+                              Index: index,
+                              snapshot: snapshot,
+                            ),
+                          );
+                        }
+                      },
                       itemCount: snapshot.data!.docs.length);
                 }
                 return Center(
