@@ -78,18 +78,70 @@ abstract class helper {
         ));
   }
 
-  static void snack(String title) {
+  static void snackloading(String title) {
     Get.snackbar(
       '',
       snackPosition: SnackPosition.BOTTOM,
       '',
-      titleText: Text(
-        AppStrings.socialApp,
-        style: Fontstylesmanager.welcomeTitleStyle.copyWith(fontSize: 20),
+      titleText: Row(
+        children: [
+          Image.asset(
+            Appassets.logo,
+            width: 50,
+            height: 50,
+          ),
+          Text(
+            AppStrings.socialApp,
+            style: Fontstylesmanager.welcomeTitleStyle.copyWith(fontSize: 20),
+          ),
+        ],
       ),
-      messageText: Text(
-        title,
-        style: Fontstylesmanager.welcomeSubTitleStyle.copyWith(fontSize: 17),
+      messageText: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style:
+                Fontstylesmanager.welcomeSubTitleStyle.copyWith(fontSize: 17),
+          ),
+          CircularProgressIndicator()
+        ],
+      ),
+    );
+  }
+
+  static void snackfailure(String title) {
+    Get.snackbar(
+      '',
+      snackPosition: SnackPosition.BOTTOM,
+      '',
+      titleText: Row(
+        children: [
+          Image.asset(
+            Appassets.logo,
+            width: 50,
+            height: 50,
+          ),
+          Text(
+            AppStrings.socialApp,
+            style: Fontstylesmanager.welcomeTitleStyle.copyWith(fontSize: 20),
+          ),
+        ],
+      ),
+      messageText: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style:
+                Fontstylesmanager.welcomeSubTitleStyle.copyWith(fontSize: 17),
+          ),
+          Lottie.asset(
+            Appassets.fail,
+            width: 50,
+            height: 50,
+          )
+        ],
       ),
     );
   }

@@ -50,13 +50,29 @@ class Postdetailes extends StatelessWidget {
                           child: IntrinsicWidth(
                             child: SizedBox(
                               width: helper.getwidth(0.55, context),
-                              child: Text(
-                                '${snapshot.data!.docs[Index].get('fristName')} ${snapshot.data!.docs[Index].get('lastName')}',
-                                style: Fontstylesmanager.welcomeTitleStyle
-                                    .copyWith(fontSize: 18),
-                                overflow: TextOverflow.ellipsis,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    '${snapshot.data!.docs[Index].get('fristName')} ${snapshot.data!.docs[Index].get('lastName')}',
+                                    style: Fontstylesmanager.welcomeTitleStyle
+                                        .copyWith(fontSize: 18),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
                               ),
+                              //postState
                             ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: helper.getwidth(0.55, context),
+                          child: Text(
+                            '${snapshot.data!.docs[Index].get('postState')}',
+                            style: Fontstylesmanager.welcomeTitleStyle.copyWith(
+                                color: Colors.blueGrey,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         Align(

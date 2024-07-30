@@ -18,6 +18,7 @@ import 'package:social_app/Features/Home/Presentation/View/Widgets/imagePostStat
 import 'package:social_app/Features/Home/Presentation/View/Widgets/imageState.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/postState.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/storys.dart';
+import 'package:social_app/Features/Profile/Presentation/View/Widgets/updateProfileState.dart';
 
 class Homeviewbody extends StatefulWidget {
   Homeviewbody({super.key});
@@ -118,7 +119,9 @@ class _HomeviewbodyState extends State<Homeviewbody> {
                               Index: index,
                             ),
                           );
-                        } else {
+                        } else if (snapshot.data!.docs[index]
+                                .get('postState') ==
+                            'postimage') {
                           int likes =
                               snapshot.data!.docs[index].get('likes').length;
 
@@ -130,6 +133,21 @@ class _HomeviewbodyState extends State<Homeviewbody> {
                               snapshot: snapshot,
                             ),
                           );
+                        } else if (snapshot.data!.docs[index]
+                                .get('postState') ==
+                            "update his profile picture") {
+                          int likes =
+                              snapshot.data!.docs[index].get('likes').length;
+                          return BlocProvider<ReactCommentCubit>(
+                            create: (context) => ReactCommentCubit(),
+                            child: Updateprofilestate(
+                              snapshot: snapshot,
+                              Index: index,
+                              likes: likes,
+                            ),
+                          );
+                        } else {
+                          return Text('data');
                         }
                       },
                       itemCount: snapshot.data!.docs.length);

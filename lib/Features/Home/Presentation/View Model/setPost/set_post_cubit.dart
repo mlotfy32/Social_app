@@ -24,7 +24,7 @@ class SetPostCubit extends Cubit<SetPostState> {
       var profilePi = await profilePic!.get('profilePic');
       var name1 = await fristname!.get('fristName');
       var name2 = await lastname!.get('lastName');
-
+      var backPi = await backPic!.get('backPic');
       var userId = await Constants().userId;
       await Constants().search.add({
         'key': '$title',
@@ -36,7 +36,9 @@ class SetPostCubit extends Cubit<SetPostState> {
         'userId': userId,
         'postState': 'post',
         'title': title,
-        'profilePic': profilePi,
+        'aboutPost': 'set new post',
+        'profilePic': '$profilePi',
+        'backPic': '$backPic',
         'time': '${DateTime.now()}',
         'likes': [],
         'comments': []
@@ -46,7 +48,6 @@ class SetPostCubit extends Cubit<SetPostState> {
 
       Get.back();
     } catch (e) {
-      log('$e');
       emit(SetPostFailure());
     }
   }
@@ -71,8 +72,10 @@ class SetPostCubit extends Cubit<SetPostState> {
         'userId': userId,
         'postState': 'postimage',
         'title': title,
+        'aboutPost': 'set new image',
         'imageUrl': imageUrl,
-        'profilePic': profilePi,
+        'profilePic': '$profilePi',
+        'backPic': '$backPic',
         'time': '${DateTime.now()}',
         'likes': [],
         'comments': []
@@ -80,7 +83,6 @@ class SetPostCubit extends Cubit<SetPostState> {
       emit(SetPostSuccess());
       Get.back();
     } catch (e) {
-      log('$e');
       emit(SetPostFailure());
     }
   }
@@ -99,8 +101,10 @@ class SetPostCubit extends Cubit<SetPostState> {
         'lastName': name2,
         'userId': userId,
         'postState': 'image',
+        'aboutPost': 'set new image',
         'imageUrl': imageUrl,
-        'profilePic': profilePi,
+        'profilePic': '$profilePi',
+        'backPic': '$backPic',
         'time': '${DateTime.now()}',
         'likes': [],
         'comments': []

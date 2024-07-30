@@ -36,4 +36,9 @@ abstract class AppStrings {
   static String share = 'Share';
   static String sharingPost = 'Sharing your post';
   static String postAdded = 'your post added successfully';
+  static String chooseSource = 'Schoose Image Source';
+  static String fromCamera = 'Take a photo';
+  static String fromGallery = 'Get image from gallery';
+  static String updatingPic = 'Updating Profile picture';
+  static String updatingCover = 'Updating Profile Cover';
 }

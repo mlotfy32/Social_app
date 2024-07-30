@@ -33,7 +33,6 @@ class SingUpCubit extends Cubit<SingUpState> {
         'userId': '${Constants().userId}'
       });
       Get.back();
-      helper.snack(AppStrings.successlogin);
       Get.offAll(() => Homeview(),
           curve: Curves.easeInCirc, duration: Duration(seconds: 1));
       print('Successfully signed up: ${userCredential.user?.email}');

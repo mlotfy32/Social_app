@@ -43,7 +43,6 @@ class SinginCubit extends Cubit<SinginState> {
         password: password,
       );
       Get.back();
-      helper.snack(AppStrings.successlogin);
       Get.offAll(() => Homeview(),
           curve: Curves.easeInCirc, duration: Duration(seconds: 1));
     } on FirebaseAuthException catch (e) {

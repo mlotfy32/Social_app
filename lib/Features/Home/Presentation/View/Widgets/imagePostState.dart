@@ -46,7 +46,7 @@ class _ImagepoststateState extends State<Imagepoststate> {
             snapshot: widget.snapshot,
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 2.0),
+            padding: EdgeInsets.symmetric(vertical: 5.0),
             child: Align(
               alignment: Alignment.topLeft,
               child: Text(

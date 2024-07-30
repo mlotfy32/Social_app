@@ -17,7 +17,9 @@ import 'package:social_app/Features/Home/Presentation/View%20Model/isScroll/is_s
 import 'package:social_app/Features/Home/Presentation/View%20Model/setPost/set_post_cubit.dart';
 import 'package:social_app/Features/Home/Presentation/View%20Model/tabBar_Cubit/tab_bar_cubit.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/bottomSheetContent.dart';
+import 'package:social_app/Features/Profile/Presentation/View%20Model/addProfileImage/add_profile_image_cubit.dart';
 import 'package:social_app/Features/Profile/Presentation/View/ProfileView.dart';
+import 'package:social_app/main.dart';
 
 class Customebuttombar extends StatelessWidget {
   Customebuttombar({super.key});
@@ -26,6 +28,8 @@ class Customebuttombar extends StatelessWidget {
   BoxDecoration disableboxDecoration =
       BoxDecoration(borderRadius: BorderRadius.circular(15));
   @override
+  var profileUrl = profilePic!.get('profilePic');
+
   Widget build(BuildContext context) {
     int initialIndex = 0;
     Offset offset = Offset(0, 0);
@@ -137,20 +141,33 @@ class Customebuttombar extends StatelessWidget {
                                             )
                                           : InkWell(
                                               onTap: () {
-                                                Get.to(() => Profileview());
+                                                Get.to(() => Profileview(),
+                                                    duration: Duration(
+                                                        milliseconds: 600),
+                                                    curve: Curves.easeInCirc);
                                                 log('message');
                                               },
                                               child: Hero(
-                                                tag:
-                                                    'profile-${Appassets.profile}',
+                                                tag: 'profile-',
                                                 child: CircleAvatar(
                                                   radius: 22,
-                                                  backgroundColor:
-                                                      AppColors.buttonColor,
-                                                  child: CircleAvatar(
-                                                    backgroundImage:
-                                                        NetworkImage(
-                                                            Appassets.profile),
+                                                  backgroundColor: Colors.white,
+                                                  child: BlocConsumer<
+                                                      AddProfileImageCubit,
+                                                      AddProfileImageState>(
+                                                    listener: (context, state) {
+                                                      if (state
+                                                          is AddProfileImageSuccess) {
+                                                        profileUrl = state.Url;
+                                                      }
+                                                    },
+                                                    builder: (context, state) {
+                                                      return CircleAvatar(
+                                                        backgroundImage:
+                                                            NetworkImage(
+                                                                '$profileUrl'),
+                                                      );
+                                                    },
                                                   ),
                                                 ),
                                               ),
