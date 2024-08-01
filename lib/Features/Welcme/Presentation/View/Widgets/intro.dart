@@ -57,7 +57,8 @@ class _IntroState extends State<Intro> with TickerProviderStateMixin {
     Timer(
       Duration(seconds: 3),
       () {
-        Get.off(() => Homeview());
+        Get.off(() => Homeview(),
+            duration: Duration(seconds: 1), curve: Curves.easeIn);
       },
     );
     super.initState();
@@ -82,16 +83,19 @@ class _IntroState extends State<Intro> with TickerProviderStateMixin {
           SizedBox(
             height: 100,
           ),
-          SlideTransition(
-            position: _animationSlideLogo,
-            child: RotationTransition(
-                turns: _animationRotationLogo,
-                child: Image.asset(
-                  Appassets.logo,
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.fill,
-                )),
+          Hero(
+            tag: 'logo-',
+            child: SlideTransition(
+              position: _animationSlideLogo,
+              child: RotationTransition(
+                  turns: _animationRotationLogo,
+                  child: Image.asset(
+                    Appassets.logo,
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.fill,
+                  )),
+            ),
           ),
           SizedBox(
             width: 10,

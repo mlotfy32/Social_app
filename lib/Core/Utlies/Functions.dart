@@ -1,6 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -10,6 +13,8 @@ import 'package:social_app/Core/Utlies/AppColors.dart';
 import 'package:social_app/Core/Utlies/AppStrings.dart';
 import 'package:social_app/Core/Utlies/Constants.dart';
 import 'package:social_app/Core/Utlies/FontStylesManager.dart';
+import 'package:social_app/Features/Autontication/Presentation/View/Widgets/emailForm.dart';
+import 'package:social_app/Features/Home/Presentation/View%20Model/react_comment/react_comment_cubit.dart';
 
 abstract class helper {
   static double getscreenHeight(BuildContext context) {
@@ -159,7 +164,7 @@ abstract class helper {
               borderRadius: BorderRadius.circular(20),
               color: Colors.blueGrey.withOpacity(0.5)),
           margin: EdgeInsets.symmetric(vertical: 80, horizontal: 10),
-          height: helper.getHeight(0.7, context),
+          // height: helper.getHeight(0.7, context),
           width: helper.getscreenWidth(context),
           child: ListView.separated(
               itemBuilder: (context, index) {
@@ -168,13 +173,39 @@ abstract class helper {
                 key = key[1].toString().split(')');
                 log('${key[0]}');
 
-                return Text(
-                  '${likes[index]['${key[0]}'][0]}',
-                  style: Fontstylesmanager.welcomeSubTitleStyle,
+                return Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundImage:
+                          NetworkImage('${likes[index]['${key[0]}'][1]}'),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      '${likes[index]['${key[0]}'][0]}',
+                      style: Fontstylesmanager.welcomeTitleStyle
+                          .copyWith(fontSize: 20),
+                    ),
+                    Spacer(),
+                    Icon(
+                      FontAwesomeIcons.solidHeart,
+                      color: Colors.red,
+                    ),
+                  ],
                 );
               },
               separatorBuilder: (context, index) => Divider(),
               itemCount: likes.length)),
     ));
   }
+
+  // static Future<void> getComments(
+  //     {required oldsnapshot,
+  //     required int Index,
+  //     required List Comments,
+  //     required String id,
+  //     required TextEditingController controller,
+  //     required BuildContext context}) async {
 }

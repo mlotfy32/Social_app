@@ -33,11 +33,14 @@ class _HomeappbarState extends State<Homeappbar> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Image.asset(
-          Appassets.logo,
-          width: 55,
-          height: 55,
-          fit: BoxFit.fill,
+        Hero(
+          tag: 'logo-',
+          child: Image.asset(
+            Appassets.logo,
+            width: 55,
+            height: 55,
+            fit: BoxFit.fill,
+          ),
         ),
         SizedBox(
           width: 130,

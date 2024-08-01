@@ -20,7 +20,7 @@ class Emailform extends StatelessWidget {
   final TextEditingController controller;
   final TextInputType? keyboardType;
   final String title;
-  final Icon icon;
+  final IconButton icon;
   final bool email;
   void Function(String)? onChanged;
   @override

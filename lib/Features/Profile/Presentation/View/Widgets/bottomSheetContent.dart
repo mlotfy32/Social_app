@@ -39,7 +39,13 @@ class BottomSheetContent extends StatelessWidget {
           Emailform(
               controller: _textEditingController,
               title: AppStrings.mind,
-              icon: Icon(FontAwesomeIcons.faceSmile),
+              icon: IconButton(
+                  onPressed: null,
+                  icon: Icon(
+                    FontAwesomeIcons.faceSmile,
+                    size: 22,
+                    color: Colors.white60,
+                  )),
               email: false),
           RowIcon_Text(
             Url: Appassets.camera,

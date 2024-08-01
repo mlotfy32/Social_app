@@ -67,7 +67,9 @@ class _BottomsheetcontentState extends State<Bottomsheetcontent> {
                     },
                     controller: textEditingController,
                     title: AppStrings.mind,
-                    icon: Icon(FontAwesomeIcons.faceLaugh)),
+                    icon: IconButton(
+                        onPressed: null,
+                        icon: Icon(FontAwesomeIcons.faceLaugh))),
                 Container(),
                 Row(
                   children: [
@@ -140,10 +142,12 @@ class _BottomsheetcontentState extends State<Bottomsheetcontent> {
                                         state.error,
                                         style:
                                             Fontstylesmanager.textDialogStyle,
-                                      )
+                                      ),
                                     ],
                                   ))
-                                : Container();
+                                : Container(
+                                    height: helper.getHeight(0.5, context),
+                                  );
                   },
                 ),
                 BlocConsumer<AddTitleCubit, AddTitleState>(

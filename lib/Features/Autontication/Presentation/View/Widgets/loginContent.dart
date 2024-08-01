@@ -38,11 +38,13 @@ class LogInContent extends StatelessWidget {
           Emailform(
             email: true,
             title: AppStrings.email,
-            icon: Icon(
-              size: 22,
-              FontAwesomeIcons.envelope,
-              color: Colors.white60,
-            ),
+            icon: IconButton(
+                onPressed: null,
+                icon: Icon(
+                  FontAwesomeIcons.faceLaugh,
+                  size: 22,
+                  color: Colors.white60,
+                )),
             controller: email,
           ),
           BlocProvider<SinginCubit>(
@@ -70,11 +72,13 @@ class LogInContent extends StatelessWidget {
                           email: true,
                           controller: email,
                           title: AppStrings.email,
-                          icon: Icon(
-                            size: 22,
-                            FontAwesomeIcons.envelope,
-                            color: Colors.white60,
-                          ),
+                          icon: IconButton(
+                              onPressed: null,
+                              icon: Icon(
+                                FontAwesomeIcons.faceLaugh,
+                                size: 22,
+                                color: Colors.white60,
+                              )),
                         ),
                         Spacer(),
                         CustomeButton(

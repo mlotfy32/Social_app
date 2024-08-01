@@ -41,4 +41,10 @@ abstract class AppStrings {
   static String fromGallery = 'Get image from gallery';
   static String updatingPic = 'Updating Profile picture';
   static String updatingCover = 'Updating Profile Cover';
+  static String writeComment = 'Write a comment...';
+  static String cansel = 'Cansel';
+  static String delete = 'Delete';
+  static String noComments = 'No Comments yet';
+  static List<String> options = ['Edit', 'Delete'];
+  static String update = 'Update';
 }

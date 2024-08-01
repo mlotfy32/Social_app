@@ -19,8 +19,10 @@ class Imagestate extends StatefulWidget {
     required this.Index,
     this.snapshot,
     required this.likes,
+    required this.comments,
   });
   final int Index;
+  final int comments;
   final dynamic snapshot;
   final int likes;
 
@@ -47,6 +49,7 @@ class _ImagestateState extends State<Imagestate> {
       child: Column(
         children: [
           Postdetailes(
+            id: widget.snapshot.data!.docs[widget.Index].id,
             Index: widget.Index,
             snapshot: widget.snapshot,
           ),
@@ -69,7 +72,8 @@ class _ImagestateState extends State<Imagestate> {
                                 .get('imageUrl'))),
                   ));
             },
-            child: Container(
+            child: AnimatedContainer(
+              duration: Duration(seconds: 1),
               width: helper.getscreenWidth(context),
               height: helper.getHeight(0.4, context),
               decoration: BoxDecoration(
@@ -86,6 +90,7 @@ class _ImagestateState extends State<Imagestate> {
               return Align(
                 alignment: Alignment.topLeft,
                 child: ReactComment(
+                  comment: widget.comments,
                   id: widget.snapshot.data!.docs[widget.Index].id,
                   likes: widget.likes,
                   Index: widget.Index,

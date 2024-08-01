@@ -18,9 +18,11 @@ class Poststate extends StatefulWidget {
     required this.Index,
     required this.snapshot,
     required this.likes,
+    required this.comments,
   });
   final int Index;
   final dynamic snapshot;
+  final int comments;
   final int likes;
   @override
   State<Poststate> createState() => _PoststateState();
@@ -45,6 +47,7 @@ class _PoststateState extends State<Poststate> {
       child: Column(
         children: [
           Postdetailes(
+            id: widget.snapshot.data!.docs[widget.Index].id,
             Index: widget.Index,
             snapshot: widget.snapshot,
           ),
@@ -68,6 +71,7 @@ class _PoststateState extends State<Poststate> {
               return Align(
                 alignment: Alignment.bottomLeft,
                 child: ReactComment(
+                  comment: widget.comments,
                   id: widget.snapshot.data!.docs[widget.Index].id,
                   likes: widget.likes,
                   Index: widget.Index,

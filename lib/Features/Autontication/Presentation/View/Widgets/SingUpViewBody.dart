@@ -47,31 +47,37 @@ class _SingupviewbodyState extends State<Singupviewbody> {
             Emailform(
               email: false,
               title: AppStrings.fristName,
-              icon: Icon(
-                size: 22,
-                Icons.person,
-                color: Colors.white60,
-              ),
+              icon: IconButton(
+                  onPressed: null,
+                  icon: Icon(
+                    FontAwesomeIcons.person,
+                    size: 22,
+                    color: Colors.white60,
+                  )),
               controller: fristName,
             ),
             Emailform(
               email: false,
               title: AppStrings.lastName,
-              icon: Icon(
-                size: 22,
-                Icons.person_outline_outlined,
-                color: Colors.white60,
-              ),
+              icon: IconButton(
+                  onPressed: null,
+                  icon: Icon(
+                    FontAwesomeIcons.personBiking,
+                    size: 22,
+                    color: Colors.white60,
+                  )),
               controller: lastName,
             ),
             Emailform(
               email: true,
               title: AppStrings.email,
-              icon: Icon(
-                size: 22,
-                FontAwesomeIcons.envelope,
-                color: Colors.white60,
-              ),
+              icon: IconButton(
+                  onPressed: null,
+                  icon: Icon(
+                    FontAwesomeIcons.envelope,
+                    size: 22,
+                    color: Colors.white60,
+                  )),
               controller: email,
             ),
             BlocProvider<SinginCubit>(

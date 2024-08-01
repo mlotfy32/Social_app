@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -45,7 +46,8 @@ class SetPostCubit extends Cubit<SetPostState> {
       });
 
       emit(SetPostSuccess());
-
+      final player = AudioPlayer();
+      await player.play(AssetSource('done.wav'));
       Get.back();
     } catch (e) {
       emit(SetPostFailure());
@@ -81,6 +83,8 @@ class SetPostCubit extends Cubit<SetPostState> {
         'comments': []
       });
       emit(SetPostSuccess());
+      final player = AudioPlayer();
+      await player.play(AssetSource('done.wav'));
       Get.back();
     } catch (e) {
       emit(SetPostFailure());
@@ -97,6 +101,7 @@ class SetPostCubit extends Cubit<SetPostState> {
       var name2 = await lastname!.get('lastName');
       var userId = await Constants().userId;
       await Constants().usersPosts.add({
+        'title': '',
         'fristName': name1,
         'lastName': name2,
         'userId': userId,
@@ -110,6 +115,8 @@ class SetPostCubit extends Cubit<SetPostState> {
         'comments': []
       });
       emit(SetPostSuccess());
+      final player = AudioPlayer();
+      await player.play(AssetSource('done.wav'));
       Get.back();
     } catch (e) {
       emit(SetPostFailure());

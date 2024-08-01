@@ -16,9 +16,11 @@ class Updateprofilestate extends StatefulWidget {
       {super.key,
       required this.snapshot,
       required this.Index,
-      required this.likes});
-  final AsyncSnapshot<QuerySnapshot<Object?>> snapshot;
+      required this.likes,
+      required this.comments});
+  final snapshot;
   final int Index;
+  final int comments;
   final int likes;
 
   @override
@@ -47,6 +49,7 @@ class _UpdateprofilestateState extends State<Updateprofilestate> {
       child: Column(
         children: [
           Postdetailes(
+            id: widget.snapshot.data!.docs[widget.Index].id,
             Index: widget.Index,
             snapshot: widget.snapshot,
           ),
@@ -62,10 +65,10 @@ class _UpdateprofilestateState extends State<Updateprofilestate> {
                     style: Fontstylesmanager.welcomeTitleStyle
                         .copyWith(fontSize: 20),
                   )),
-          Text(
-            '${userData['likes']}',
-            style: Fontstylesmanager.welcomeTitleStyle.copyWith(fontSize: 20),
-          ),
+          // Text(
+          //   '${userData['likes']}',
+          //   style: Fontstylesmanager.welcomeTitleStyle.copyWith(fontSize: 20),
+          // ),
           InkWell(
               onTap: () {
                 Get.bottomSheet(
@@ -100,6 +103,7 @@ class _UpdateprofilestateState extends State<Updateprofilestate> {
                   id: widget.snapshot.data!.docs[widget.Index].id,
                   likes: widget.likes,
                   Index: widget.Index,
+                  comment: widget.comments,
                   snapshot: widget.snapshot,
                 ),
               );

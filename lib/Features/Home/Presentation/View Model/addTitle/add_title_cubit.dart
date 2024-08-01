@@ -12,4 +12,12 @@ class AddTitleCubit extends Cubit<AddTitleState> {
       emit(AddTitle(hasTitle: false));
     }
   }
+
+  opacity(bool x) {
+    if (x != false) {
+      emit(AddTitle(hasTitle: true));
+    } else {
+      emit(AddTitle(hasTitle: false));
+    }
+  }
 }

@@ -8,4 +8,5 @@ abstract class Appassets {
       'https://cdn-icons-png.flaticon.com/512/149/149071.png';
   static String camera = 'assets/cameraIcon.svg';
   static String gallery = 'assets/galleryIcon.svg';
+  static String share = 'assets/share.svg';
 }

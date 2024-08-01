@@ -11,6 +11,7 @@ import 'package:social_app/Core/Utlies/Constants.dart';
 import 'package:social_app/Core/Utlies/simpleObserver.dart';
 import 'package:social_app/Features/Autontication/Presentation/ViewModel/Autiontication/SingInCubit/singin_cubit.dart';
 import 'package:social_app/Features/Home/Presentation/View%20Model/isScroll/is_scroll_cubit.dart';
+import 'package:social_app/Features/Home/Presentation/View%20Model/react_comment/react_comment_cubit.dart';
 import 'package:social_app/Features/Home/Presentation/View%20Model/tabBar_Cubit/tab_bar_cubit.dart';
 import 'package:social_app/Features/Home/Presentation/View/homeView.dart';
 import 'package:social_app/Features/Profile/Presentation/View%20Model/addProfileImage/add_profile_image_cubit.dart';
@@ -67,7 +68,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<AddProfileImageCubit>(
           create: (context) => AddProfileImageCubit(),
-        )
+        ),
+        // BlocProvider<ReactCommentCubit>(
+        //   create: (context) => ReactCommentCubit(),
+        // ),
       ],
       child: GetMaterialApp(
           theme: ThemeData(

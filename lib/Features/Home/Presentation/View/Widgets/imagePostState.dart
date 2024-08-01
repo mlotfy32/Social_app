@@ -14,9 +14,14 @@ import 'package:social_app/Features/Home/Presentation/View/Widgets/react_comment
 
 class Imagepoststate extends StatefulWidget {
   Imagepoststate(
-      {super.key, required this.Index, this.snapshot, required this.likes});
+      {super.key,
+      required this.Index,
+      this.snapshot,
+      required this.likes,
+      required this.comments});
   final int Index;
   final dynamic snapshot;
+  final int comments;
   final int likes;
 
   @override
@@ -42,6 +47,7 @@ class _ImagepoststateState extends State<Imagepoststate> {
       child: Column(
         children: [
           Postdetailes(
+            id: widget.snapshot.data!.docs[widget.Index].id,
             Index: widget.Index,
             snapshot: widget.snapshot,
           ),
@@ -73,7 +79,8 @@ class _ImagepoststateState extends State<Imagepoststate> {
                                 .get('imageUrl'))),
                   ));
             },
-            child: Container(
+            child: AnimatedContainer(
+              duration: Duration(seconds: 1),
               width: helper.getscreenWidth(context),
               height: helper.getHeight(0.4, context),
               decoration: BoxDecoration(
@@ -96,6 +103,7 @@ class _ImagepoststateState extends State<Imagepoststate> {
                   id: widget.snapshot.data!.docs[widget.Index].id,
                   likes: widget.likes,
                   snapshot: widget.snapshot,
+                  comment: widget.comments,
                   Index: widget.Index,
                 ),
               );

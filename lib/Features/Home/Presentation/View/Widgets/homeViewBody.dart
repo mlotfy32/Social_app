@@ -1,11 +1,14 @@
 import 'dart:developer';
 
+import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:social_app/Core/Utlies/AppColors.dart';
 import 'package:social_app/Core/Utlies/Constants.dart';
+import 'package:social_app/Core/Utlies/FontStylesManager.dart';
 import 'package:social_app/Core/Utlies/Functions.dart';
 import 'package:social_app/Features/Home/Notification/Presentation/View%20Model/Notification_Cubit/notification_cubit.dart';
 import 'package:social_app/Features/Home/Presentation/View%20Model/isScroll/is_scroll_cubit.dart';
@@ -43,11 +46,14 @@ class _HomeviewbodyState extends State<Homeviewbody> {
   @override
   void dispose() {
     _scrollController.dispose();
+    _textEditingController.dispose();
     super.dispose();
   }
 
+  TextEditingController _textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    String searchText = '';
     return Scaffold(
       body: SafeArea(
           child: Container(
@@ -61,10 +67,24 @@ class _HomeviewbodyState extends State<Homeviewbody> {
             height: 10,
           ),
           Storys(),
-          SizedBox(
-            height: 10,
+          Material(
+            color: Colors.transparent,
+            child: AnimSearchBar(
+                closeSearchOnSuffixTap: true,
+                textFieldIconColor: Colors.white,
+                searchIconColor: AppColors.buttonColor,
+                suffixIcon: Icon(FontAwesomeIcons.circleArrowLeft),
+                textFieldColor: Colors.grey[800],
+                color: Colors.white10,
+                prefixIcon: Icon(
+                  FontAwesomeIcons.search,
+                  color: AppColors.buttonColor,
+                ),
+                width: helper.getscreenWidth(context),
+                textController: _textEditingController,
+                onSuffixTap: () {},
+                onSubmitted: (x) {}),
           ),
-          Customeform(),
           SizedBox(
             height: 10,
           ),
@@ -96,12 +116,14 @@ class _HomeviewbodyState extends State<Homeviewbody> {
                             'post') {
                           int likes =
                               snapshot.data!.docs[index].get('likes').length;
-
+                          int comments =
+                              snapshot.data!.docs[index].get('comments').length;
                           return BlocProvider<ReactCommentCubit>(
                             create: (context) => ReactCommentCubit(),
                             child: Poststate(
                               likes: likes,
                               Index: index,
+                              comments: comments,
                               snapshot: snapshot,
                             ),
                           );
@@ -110,12 +132,14 @@ class _HomeviewbodyState extends State<Homeviewbody> {
                             'image') {
                           int likes =
                               snapshot.data!.docs[index].get('likes').length;
-
+                          int comments =
+                              snapshot.data!.docs[index].get('comments').length;
                           return BlocProvider<ReactCommentCubit>(
                             create: (context) => ReactCommentCubit(),
                             child: Imagestate(
                               likes: likes,
                               snapshot: snapshot,
+                              comments: comments,
                               Index: index,
                             ),
                           );
@@ -124,13 +148,15 @@ class _HomeviewbodyState extends State<Homeviewbody> {
                             'postimage') {
                           int likes =
                               snapshot.data!.docs[index].get('likes').length;
-
+                          int comments =
+                              snapshot.data!.docs[index].get('comments').length;
                           return BlocProvider<ReactCommentCubit>(
                             create: (context) => ReactCommentCubit(),
                             child: Imagepoststate(
                               likes: likes,
                               Index: index,
                               snapshot: snapshot,
+                              comments: comments,
                             ),
                           );
                         } else if (snapshot.data!.docs[index]
@@ -138,15 +164,23 @@ class _HomeviewbodyState extends State<Homeviewbody> {
                             "update his profile picture") {
                           int likes =
                               snapshot.data!.docs[index].get('likes').length;
+                          int comments =
+                              snapshot.data!.docs[index].get('comments').length;
+
                           return BlocProvider<ReactCommentCubit>(
                             create: (context) => ReactCommentCubit(),
                             child: Updateprofilestate(
                               snapshot: snapshot,
+                              comments: comments,
                               Index: index,
                               likes: likes,
                             ),
                           );
                         } else {
+                          int likes =
+                              snapshot.data!.docs[index].get('likes').length;
+                          int comments =
+                              snapshot.data!.docs[index].get('comments').length;
                           return Text('data');
                         }
                       },

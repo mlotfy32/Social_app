@@ -31,22 +31,24 @@ class ProfilePostes extends StatelessWidget {
           itemBuilder: (context, index) {
             if (snapshot.data!.docs[index].get('postState') == 'post') {
               int likes = snapshot.data!.docs[index].get('likes').length;
-
+              int comments = snapshot.data!.docs[index].get('comments').length;
               return BlocProvider<ReactCommentCubit>(
                 create: (context) => ReactCommentCubit(),
                 child: Poststate(
                   likes: likes,
+                  comments: comments,
                   Index: index,
                   snapshot: snapshot,
                 ),
               );
             } else if (snapshot.data!.docs[index].get('postState') == 'image') {
               int likes = snapshot.data!.docs[index].get('likes').length;
-
+              int comments = snapshot.data!.docs[index].get('comments').length;
               return BlocProvider<ReactCommentCubit>(
                 create: (context) => ReactCommentCubit(),
                 child: Imagestate(
                   likes: likes,
+                  comments: comments,
                   snapshot: snapshot,
                   Index: index,
                 ),
@@ -54,10 +56,11 @@ class ProfilePostes extends StatelessWidget {
             } else if (snapshot.data!.docs[index].get('postState') ==
                 'postimage') {
               int likes = snapshot.data!.docs[index].get('likes').length;
-
+              int comments = snapshot.data!.docs[index].get('comments').length;
               return BlocProvider<ReactCommentCubit>(
                 create: (context) => ReactCommentCubit(),
                 child: Imagepoststate(
+                  comments: comments,
                   likes: likes,
                   Index: index,
                   snapshot: snapshot,
@@ -66,8 +69,10 @@ class ProfilePostes extends StatelessWidget {
             } else if (snapshot.data!.docs[index].get('postState') ==
                 'update his profile picture') {
               int likes = snapshot.data!.docs[index].get('likes').length;
+              int comments = snapshot.data!.docs[index].get('comments').length;
               return Updateprofilestate(
                 snapshot: snapshot,
+                comments: comments,
                 Index: index,
                 likes: likes,
               );

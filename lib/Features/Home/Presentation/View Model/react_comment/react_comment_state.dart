@@ -18,3 +18,9 @@ class updateReactComment extends ReactCommentState {
 
   updateReactComment({required this.isLiked, required this.index});
 }
+
+class updateComment extends ReactCommentState {
+  final List Comments;
+
+  updateComment({required this.Comments});
+}
