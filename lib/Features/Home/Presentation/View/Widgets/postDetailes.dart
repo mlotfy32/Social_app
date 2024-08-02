@@ -87,7 +87,7 @@ class Postdetailes extends StatelessWidget {
                         SizedBox(
                           width: helper.getwidth(0.55, context),
                           child: Text(
-                            '${snapshot.data!.docs[Index].get('postState')}',
+                            '${snapshot.data!.docs[Index].get('aboutPost')}',
                             style: Fontstylesmanager.welcomeTitleStyle.copyWith(
                                 color: Colors.blueGrey,
                                 fontSize: 12,

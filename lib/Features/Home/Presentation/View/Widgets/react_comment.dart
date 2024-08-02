@@ -39,6 +39,7 @@ class ReactComment extends StatelessWidget {
     bool update = false;
     return FittedBox(
       child: AnimatedContainer(
+        margin: EdgeInsets.only(top: 5),
         duration: Duration(microseconds: 1500),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),

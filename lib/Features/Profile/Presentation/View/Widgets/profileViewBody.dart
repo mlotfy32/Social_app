@@ -45,11 +45,10 @@ class _ProfileviewbodyState extends State<Profileviewbody> {
         children: [
           SizedBox(
             height: helper.getHeight(0.35, context),
-            child: ListView(
-              physics: AlwaysScrollableScrollPhysics(),
+            child: Column(
               children: [
                 SizedBox(
-                  height: helper.getHeight(0.3, context),
+                  height: helper.getHeight(0.32, context),
                   width: helper.getscreenWidth(context),
                   child: Stack(
                     children: [
@@ -72,7 +71,7 @@ class _ProfileviewbodyState extends State<Profileviewbody> {
                           },
                           builder: (context, state) {
                             return Container(
-                              height: helper.getHeight(0.27, context),
+                              height: helper.getHeight(0.28, context),
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: NetworkImage("$backUrl"),
@@ -90,8 +89,7 @@ class _ProfileviewbodyState extends State<Profileviewbody> {
                               transitionOnUserGestures: true,
                               tag: 'profile-',
                               child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 0),
+                                padding: EdgeInsets.only(left: 5),
                                 child: CircleAvatar(
                                   radius: 75,
                                   backgroundColor: Colors.white,

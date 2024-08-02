@@ -20,8 +20,9 @@ import 'package:social_app/Features/Home/Presentation/View/Widgets/homeAppBar.da
 import 'package:social_app/Features/Home/Presentation/View/Widgets/imagePostState.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/imageState.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/postState.dart';
-import 'package:social_app/Features/Home/Presentation/View/Widgets/storys.dart';
 import 'package:social_app/Features/Profile/Presentation/View/Widgets/updateProfileState.dart';
+import 'package:social_app/Features/Stores/Presentation/View/View_Story.dart';
+import 'package:social_app/Features/Stores/Presentation/View/Widgets/ViewStoryBoday.dart';
 
 class Homeviewbody extends StatefulWidget {
   Homeviewbody({super.key});
@@ -64,26 +65,32 @@ class _HomeviewbodyState extends State<Homeviewbody> {
           BlocProvider<NotificationCubit>(
               create: (context) => NotificationCubit(), child: Homeappbar()),
           SizedBox(
-            height: 10,
+            height: 8,
           ),
-          Storys(),
-          Material(
-            color: Colors.transparent,
-            child: AnimSearchBar(
-                closeSearchOnSuffixTap: true,
-                textFieldIconColor: Colors.white,
-                searchIconColor: AppColors.buttonColor,
-                suffixIcon: Icon(FontAwesomeIcons.circleArrowLeft),
-                textFieldColor: Colors.grey[800],
-                color: Colors.white10,
-                prefixIcon: Icon(
-                  FontAwesomeIcons.search,
-                  color: AppColors.buttonColor,
-                ),
-                width: helper.getscreenWidth(context),
-                textController: _textEditingController,
-                onSuffixTap: () {},
-                onSubmitted: (x) {}),
+          SizedBox(
+              width: helper.getscreenWidth(context) - 4,
+              height: helper.getHeight(0.11, context),
+              child: ViewStory()),
+          SizedBox(
+            height: 60,
+            child: Material(
+              color: Colors.transparent,
+              child: AnimSearchBar(
+                  closeSearchOnSuffixTap: true,
+                  textFieldIconColor: Colors.white,
+                  searchIconColor: AppColors.buttonColor,
+                  suffixIcon: Icon(FontAwesomeIcons.circleArrowLeft),
+                  textFieldColor: Colors.grey[800],
+                  color: Colors.white10,
+                  prefixIcon: Icon(
+                    FontAwesomeIcons.search,
+                    color: AppColors.buttonColor,
+                  ),
+                  width: helper.getscreenWidth(context),
+                  textController: _textEditingController,
+                  onSuffixTap: () {},
+                  onSubmitted: (x) {}),
+            ),
           ),
           SizedBox(
             height: 10,
@@ -99,7 +106,7 @@ class _HomeviewbodyState extends State<Homeviewbody> {
                       separatorBuilder: (context, index) {
                         return Container(
                           margin:
-                              EdgeInsets.symmetric(horizontal: 50, vertical: 5),
+                              EdgeInsets.symmetric(horizontal: 50, vertical: 3),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               gradient: LinearGradient(colors: [
@@ -112,6 +119,23 @@ class _HomeviewbodyState extends State<Homeviewbody> {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
+                        // String post =
+                        //     snapshot.data!.docs[index].get('postState');
+                        // int likes =
+                        //     snapshot.data!.docs[index].get('likes').length;
+                        // int comments =
+                        //     snapshot.data!.docs[index].get('comments').length;
+                        // log('$post $index');
+                        // //     'post')
+                        // BlocProvider(
+                        //   create: (context) => ReactCommentCubit(),
+                        //   child: CustomePost(
+                        //       post: post,
+                        //       likes: likes,
+                        //       comments: comments,
+                        //       Index: index,
+                        //       snapshot: snapshot),
+                        // );
                         if (snapshot.data!.docs[index].get('postState') ==
                             'post') {
                           int likes =
@@ -196,3 +220,50 @@ class _HomeviewbodyState extends State<Homeviewbody> {
     );
   }
 }
+
+// Widget CustomePost(
+//     {required String post,
+//     required int likes,
+//     required int comments,
+//     required Index,
+//     required snapshot}) {
+//   switch (post) {
+//     case 'post':
+//       {
+//         log('$Index $post');
+//         return Poststate(
+//             Index: Index, snapshot: snapshot, likes: likes, comments: comments);
+//       }
+//     case 'image':
+//       {
+//         log('$Index $post');
+//         return Imagestate(
+//             snapshot: snapshot, Index: Index, likes: likes, comments: comments);
+//       }
+//     case 'postimage':
+//       {
+//         log('$Index $post');
+//         return Imagepoststate(
+//             snapshot: snapshot, Index: Index, likes: likes, comments: comments);
+//       }
+//     case 'update his profile picture':
+//       {
+//         log('$Index $post');
+
+//         return Updateprofilestate(
+//             snapshot: snapshot, Index: Index, likes: likes, comments: comments);
+//       }
+//     case 'update his profile picture':
+//       {
+//         log('$Index $post');
+
+//         return Updateprofilestate(
+//             snapshot: snapshot, Index: Index, likes: likes, comments: comments);
+//       }
+//     default:
+//       return CircleAvatar(
+//         radius: 20,
+//         backgroundColor: Colors.white,
+//       );
+//   }
+// }

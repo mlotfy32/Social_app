@@ -44,6 +44,7 @@ class AddProfileImageCubit extends Cubit<AddProfileImageState> {
           imageurl = await ref.getDownloadURL();
 
           Constants().usersPosts.add({
+            'aboutPost': 'update his profile picture',
             'fristName': name1,
             'lastName': name2,
             'userId': userId,

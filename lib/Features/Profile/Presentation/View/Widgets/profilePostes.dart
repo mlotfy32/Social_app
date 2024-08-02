@@ -14,7 +14,9 @@ class ProfilePostes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: helper.getHeight(0.65, context),
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      height: helper.getHeight(0.6, context),
+      width: helper.getscreenWidth(context),
       child: ListView.separated(
           separatorBuilder: (context, index) {
             return Container(
@@ -25,9 +27,7 @@ class ProfilePostes extends StatelessWidget {
                       colors: [Color(0xffFF4E50), Color(0xffF9D423)])),
             );
           },
-          padding: EdgeInsets.all(0),
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             if (snapshot.data!.docs[index].get('postState') == 'post') {
               int likes = snapshot.data!.docs[index].get('likes').length;
