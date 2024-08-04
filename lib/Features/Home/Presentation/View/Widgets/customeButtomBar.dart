@@ -160,6 +160,10 @@ class Customebuttombar extends StatelessWidget {
                                                           is AddProfileImageSuccess) {
                                                         profileUrl = state.Url;
                                                       }
+                                                      if (state is update) {
+                                                        profileUrl = state.url;
+                                                        log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+                                                      }
                                                     },
                                                     builder: (context, state) {
                                                       return CircleAvatar(

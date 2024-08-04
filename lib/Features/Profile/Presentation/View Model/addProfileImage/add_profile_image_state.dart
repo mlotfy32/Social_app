@@ -24,3 +24,9 @@ class AddBackImageSuccess extends AddProfileImageState {
 class AddProfileImageFailure extends AddProfileImageState {}
 
 class AddBackImageFailure extends AddProfileImageState {}
+
+class update extends AddProfileImageState {
+  final String url;
+
+  update({required this.url});
+}

@@ -131,4 +131,8 @@ class AddProfileImageCubit extends Cubit<AddProfileImageState> {
       }
     }
   }
+
+  updateImage({required Url}) {
+    emit(update(url: Url));
+  }
 }

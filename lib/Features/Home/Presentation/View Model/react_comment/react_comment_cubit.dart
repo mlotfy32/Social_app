@@ -38,7 +38,10 @@ class ReactCommentCubit extends Cubit<ReactCommentState> {
             }
           ],
         });
+        final AudioPlayer player = AudioPlayer();
+        player.play(AssetSource('like.wav'));
         emit(updateReactComment(isLiked: true, index: index));
+
         //notempty
       } else {
         for (int i = 0; i < likes.length; i++) {

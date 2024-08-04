@@ -15,6 +15,7 @@ import 'package:social_app/Core/Utlies/Functions.dart';
 import 'package:social_app/Features/Autontication/Presentation/View/Widgets/emailForm.dart';
 import 'package:social_app/Features/Home/Presentation/View%20Model/addImage/add_image_cubit.dart';
 import 'package:social_app/Features/Home/Presentation/View%20Model/addTitle/add_title_cubit.dart';
+import 'package:social_app/Features/Profile/Presentation/View%20Model/addProfileImage/add_profile_image_cubit.dart';
 import 'package:social_app/Features/Welcme/Presentation/View/Widgets/customeButton.dart';
 import 'package:social_app/main.dart';
 
@@ -157,6 +158,8 @@ class _UpdateImageState extends State<UpdateImage> {
                                       .where('email', isEqualTo: '$email')
                                       .get();
                                   String id = Data.docs[0].id;
+                                  BlocProvider.of<AddProfileImageCubit>(context)
+                                      .updateImage(Url: Url.first);
                                   await Constants()
                                       .Profile
                                       .doc(id)

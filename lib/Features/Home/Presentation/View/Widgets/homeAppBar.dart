@@ -37,8 +37,8 @@ class _HomeappbarState extends State<Homeappbar> {
           tag: 'logo-',
           child: Image.asset(
             Appassets.logo,
-            width: 55,
-            height: 55,
+            width: 45,
+            height: 45,
             fit: BoxFit.fill,
           ),
         ),

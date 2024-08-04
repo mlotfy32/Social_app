@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -72,6 +73,16 @@ class _EditPostState extends State<EditPost> {
                     onTap: opacity == 0.3
                         ? null
                         : () async {
+                            QuerySnapshot Data = await Constants()
+                                .search
+                                .where('title', isEqualTo: widget.title)
+                                .get();
+                            var id = await Data.docs;
+                            Constants()
+                                .search
+                                .doc('$id')
+                                .update({'key': textEditingController.text});
+                            Constants().search.doc();
                             helper.loading;
                             Constants().usersPosts.doc(widget.id).update({
                               'title': textEditingController.text,

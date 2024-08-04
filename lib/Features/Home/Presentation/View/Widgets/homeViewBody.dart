@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:social_app/Core/Utlies/AppColors.dart';
 import 'package:social_app/Core/Utlies/Constants.dart';
@@ -21,6 +23,7 @@ import 'package:social_app/Features/Home/Presentation/View/Widgets/homeAppBar.da
 import 'package:social_app/Features/Home/Presentation/View/Widgets/imagePostState.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/imageState.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/postState.dart';
+import 'package:social_app/Features/Home/Presentation/View/Widgets/searchBody.dart';
 import 'package:social_app/Features/Profile/Presentation/View/Widgets/updateProfileState.dart';
 import 'package:social_app/Features/Stores/Presentation/View/View_Story.dart';
 import 'package:social_app/Features/Stores/Presentation/View/Widgets/ViewStoryBoday.dart';
@@ -89,8 +92,16 @@ class _HomeviewbodyState extends State<Homeviewbody> {
                   ),
                   width: helper.getscreenWidth(context),
                   textController: _textEditingController,
-                  onSuffixTap: () {},
-                  onSubmitted: (x) {}),
+                  onSuffixTap: () {
+                    log('aaa');
+                  },
+                  onSubmitted: (x) {
+                    if (x != '') {
+                      Get.to(() => SearchBody(search: x));
+                    } else {
+                      helper.snackfailure('write something to seatch');
+                    }
+                  }),
             ),
           ),
           SizedBox(

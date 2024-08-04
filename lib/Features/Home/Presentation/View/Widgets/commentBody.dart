@@ -84,7 +84,7 @@ class _CommentbodyState extends State<Commentbody> {
           builder: (context, state) {
             return ListView(
               children: [
-                widget.len == 0
+                Comment.length == 0
                     ? Padding(
                         padding: EdgeInsets.only(
                             top: helper.getHeight(0.4, context)),
@@ -191,7 +191,7 @@ class _CommentbodyState extends State<Commentbody> {
                       ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: widget.len == 0
+                      top: Comment.length == 0
                           ? helper.getHeight(0.38, context)
                           : 0),
                   child: SizedBox(

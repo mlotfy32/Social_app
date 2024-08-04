@@ -120,33 +120,38 @@ abstract class helper {
       '',
       snackPosition: SnackPosition.BOTTOM,
       '',
-      titleText: Row(
-        children: [
-          Image.asset(
-            Appassets.logo,
-            width: 50,
-            height: 50,
-          ),
-          Text(
-            AppStrings.socialApp,
-            style: Fontstylesmanager.welcomeTitleStyle.copyWith(fontSize: 20),
-          ),
-        ],
+      titleText: SizedBox(
+        height: 30,
+        child: Row(
+          children: [
+            Image.asset(
+              Appassets.logo,
+              width: 40,
+              height: 40,
+            ),
+            Text(
+              AppStrings.socialApp,
+              style: Fontstylesmanager.welcomeTitleStyle.copyWith(fontSize: 20),
+            ),
+          ],
+        ),
       ),
-      messageText: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style:
-                Fontstylesmanager.welcomeSubTitleStyle.copyWith(fontSize: 17),
-          ),
-          Lottie.asset(
-            Appassets.fail,
-            width: 50,
-            height: 50,
-          )
-        ],
+      messageText: SizedBox(
+        height: 22,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: Fontstylesmanager.welcomeTitleStyle.copyWith(fontSize: 17),
+            ),
+            Lottie.asset(
+              Appassets.fail,
+              width: 50,
+              height: 50,
+            )
+          ],
+        ),
       ),
     );
   }
