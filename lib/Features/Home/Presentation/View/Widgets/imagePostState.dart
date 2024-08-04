@@ -76,7 +76,12 @@ class _ImagepoststateState extends State<Imagepoststate> {
                         imageProvider: NetworkImage(
                             scale: 200,
                             widget.snapshot.data!.docs[widget.Index]
-                                .get('imageUrl'))),
+                                        .get('postState') ==
+                                    'updated his cover photo'
+                                ? widget.snapshot.data!.docs[widget.Index]
+                                    .get('backPic')
+                                : widget.snapshot.data!.docs[widget.Index]
+                                    .get('imageUrl'))),
                   ));
             },
             child: AnimatedContainer(

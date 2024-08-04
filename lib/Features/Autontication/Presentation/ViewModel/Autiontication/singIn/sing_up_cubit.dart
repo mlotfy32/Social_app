@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:meta/meta.dart';
+import 'package:social_app/Core/Utlies/AppAssets.dart';
 import 'package:social_app/Core/Utlies/AppStrings.dart';
 import 'package:social_app/Core/Utlies/Constants.dart';
 import 'package:social_app/Core/Utlies/Functions.dart';
@@ -17,9 +18,6 @@ class SingUpCubit extends Cubit<SingUpState> {
   singUp(
       String email, String Password, String fristName, String lastName) async {
     try {
-      var name1 = await fristname!.setString('fristName', fristName);
-      var name2 = await lastname!.setString('lastName', lastName);
-
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
@@ -32,7 +30,23 @@ class SingUpCubit extends Cubit<SingUpState> {
         'password': Password,
         'userId': '${Constants().userId}'
       });
+      await emailPrfs!.setString('email', email);
+      await fristname!.setString('fristName', fristName);
+      await lastname!.setString('lastName', lastName);
+      await profilePic!.setString('profilePic', Appassets.profile);
+      await backPic!.setString('backPic', Appassets.profile);
+
+      await Constants().Profile.add({
+        'fristName': fristName,
+        'lastName': lastName,
+        'email': email,
+        'password': Password,
+        'userId': '${Constants().userId}',
+        'profilePic': Appassets.profile,
+        'backPic': Appassets.profile
+      });
       Get.back();
+
       Get.offAll(() => Homeview(),
           curve: Curves.easeInCirc, duration: Duration(seconds: 1));
       print('Successfully signed up: ${userCredential.user?.email}');

@@ -48,4 +48,5 @@ abstract class AppStrings {
   static List<String> options = ['Edit', 'Delete'];
   static String update = 'Update';
   static String myStory = 'My Story';
+  static String deletestory = 'Delete Story';
 }

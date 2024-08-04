@@ -91,8 +91,8 @@ class _IntroState extends State<Intro> with TickerProviderStateMixin {
                   turns: _animationRotationLogo,
                   child: Image.asset(
                     Appassets.logo,
-                    width: 100,
-                    height: 100,
+                    width: 80,
+                    height: 80,
                     fit: BoxFit.fill,
                   )),
             ),

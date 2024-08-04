@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,8 +26,12 @@ class AddProfileImageCubit extends Cubit<AddProfileImageState> {
     var backPi = await backPic!.get('backPic');
     var name1 = await fristname!.get('fristName');
     var name2 = await lastname!.get('lastName');
+    var email = await emailPrfs!.get('email');
 
     var userId = await Constants().userId;
+    QuerySnapshot Data =
+        await Constants().Profile.where('email', isEqualTo: email).get();
+    String id = await Data.docs[0].id;
     if (source == 'camera') {
       try {
         picked = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -51,7 +56,7 @@ class AddProfileImageCubit extends Cubit<AddProfileImageState> {
             'title': title,
             'postState': imageState == 'profile'
                 ? 'update his profile picture'
-                : 'updated his cover photo.',
+                : 'updated his cover photo',
             'profilePic': imageState == 'profile' ? '$imageurl' : '$profilePi',
             'backPic': imageState != 'profile' ? '$imageurl' : '$backPic',
             'time': '${DateTime.now()}',
@@ -92,13 +97,16 @@ class AddProfileImageCubit extends Cubit<AddProfileImageState> {
           imageurl = await ref.getDownloadURL();
 
           Constants().usersPosts.add({
+            'aboutPost': imageState == 'profile'
+                ? 'update his profile picture'
+                : 'updated his cover photo',
             'fristName': name1,
             'lastName': name2,
             'userId': userId,
             'title': title,
             'postState': imageState == 'profile'
                 ? 'update his profile picture'
-                : 'updated his cover photo.',
+                : 'updated his cover photo',
             'profilePic': imageState == 'profile' ? '$imageurl' : '$profilePi',
             'backPic': imageState != 'profile' ? '$imageurl' : '$backPic',
             'time': '${DateTime.now()}',
@@ -106,9 +114,11 @@ class AddProfileImageCubit extends Cubit<AddProfileImageState> {
             'comments': []
           });
           if (imageState == 'profile') {
-            profilePi = await profilePic!.setString('profilePic', imageurl);
+            await profilePic!.setString('profilePic', imageurl);
+            Constants().Profile.doc(id).update({'profilePic': imageurl});
           } else {
-            backPi = await backPic!.setString('backPic', imageurl);
+            await backPic!.setString('backPic', imageurl);
+            Constants().Profile.doc(id).update({'backPic': imageurl});
           }
           imageState == 'profile'
               ? emit(AddProfileImageSuccess(Url: imageurl))

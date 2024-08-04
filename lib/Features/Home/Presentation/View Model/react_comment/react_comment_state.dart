@@ -24,3 +24,9 @@ class updateComment extends ReactCommentState {
 
   updateComment({required this.Comments});
 }
+
+class Liked extends ReactCommentState {
+  final bool like;
+
+  Liked({required this.like});
+}

@@ -144,6 +144,13 @@ class _ProfileviewbodyState extends State<Profileviewbody> {
               ],
             ),
           ),
+          Text(
+            '  ${fristname!.getString('fristName')} ${lastname!.getString('lastName')}',
+            style: Fontstylesmanager.welcomeTitleStyle.copyWith(fontSize: 20),
+          ),
+          SizedBox(
+            height: 5,
+          ),
           StreamBuilder(
               stream: Constants()
                   .usersPosts

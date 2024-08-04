@@ -73,10 +73,9 @@ class _EditPostState extends State<EditPost> {
                         ? null
                         : () async {
                             helper.loading;
-                            Constants()
-                                .usersPosts
-                                .doc(widget.id)
-                                .update({'title': textEditingController.text});
+                            Constants().usersPosts.doc(widget.id).update({
+                              'title': textEditingController.text,
+                            });
                             final player = AudioPlayer();
                             Get.back();
                             await player.play(AssetSource('done.wav'));

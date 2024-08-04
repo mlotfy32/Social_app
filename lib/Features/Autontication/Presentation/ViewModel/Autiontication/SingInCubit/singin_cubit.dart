@@ -22,27 +22,25 @@ class SinginCubit extends Cubit<SinginState> {
     String email,
     String password,
   ) async {
+    List<String> data = [];
     try {
-      QuerySnapshot fetchData = await Constants().usersCollection.get();
-      List<QueryDocumentSnapshot> Data = fetchData.docs;
-      for (int x = 0; x < Data.length; x++) {
-        log('${Constants().userId}');
-        if (email == Data[x].get('email') &&
-            password == Data[x].get('password')) {
-          await fristname!.setString('fristName', Data[x].get('fristName'));
-          await lastname!.setString('lastName', Data[x].get('lastName'));
-          log('${Data[x].get('fristName')}');
-          log('${Data[x].get('lastName')}');
-          log('$x');
-          break;
-        }
-      }
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      QuerySnapshot Data =
+          await Constants().Profile.where('email', isEqualTo: email).get();
+      List<QueryDocumentSnapshot> snapshot = await Data.docs;
+      snapshot.forEach((value) {
+        data.add(value.get('fristName'));
+        data.add(value.get('lastName'));
+      });
+      await emailPrfs!.setString('email', email);
+      await fristname!.setString('fristname', '${data[0]}');
+      await lastname!.setString('lastname', '${data[1]}');
       Get.back();
+
       Get.offAll(() => Homeview(),
           curve: Curves.easeInCirc, duration: Duration(seconds: 1));
     } on FirebaseAuthException catch (e) {

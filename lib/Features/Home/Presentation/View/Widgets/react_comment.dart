@@ -22,7 +22,7 @@ import 'package:social_app/Features/Home/Presentation/View/Widgets/customeIconBu
 class ReactComment extends StatelessWidget {
   ReactComment(
       {super.key,
-      this.snapshot,
+      required this.snapshot,
       required this.likes,
       required this.id,
       required this.Index,

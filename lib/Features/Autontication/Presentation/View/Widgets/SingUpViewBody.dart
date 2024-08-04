@@ -50,7 +50,7 @@ class _SingupviewbodyState extends State<Singupviewbody> {
               icon: IconButton(
                   onPressed: null,
                   icon: Icon(
-                    FontAwesomeIcons.person,
+                    FontAwesomeIcons.user,
                     size: 22,
                     color: Colors.white60,
                   )),
@@ -62,7 +62,7 @@ class _SingupviewbodyState extends State<Singupviewbody> {
               icon: IconButton(
                   onPressed: null,
                   icon: Icon(
-                    FontAwesomeIcons.personBiking,
+                    FontAwesomeIcons.userCheck,
                     size: 22,
                     color: Colors.white60,
                   )),

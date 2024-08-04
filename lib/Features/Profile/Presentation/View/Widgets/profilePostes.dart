@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/Core/Utlies/Functions.dart';
 import 'package:social_app/Features/Home/Presentation/View%20Model/react_comment/react_comment_cubit.dart';
+import 'package:social_app/Features/Home/Presentation/View/Widgets/backState.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/imagePostState.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/imageState.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/postState.dart';
@@ -15,7 +16,7 @@ class ProfilePostes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
-      height: helper.getHeight(0.6, context),
+      height: helper.getHeight(0.56, context),
       width: helper.getscreenWidth(context),
       child: ListView.separated(
           separatorBuilder: (context, index) {
@@ -76,9 +77,23 @@ class ProfilePostes extends StatelessWidget {
                 Index: index,
                 likes: likes,
               );
-            } else {}
+            } else {
+              int likes = snapshot.data!.docs[index].get('likes').length;
+              int comments = snapshot.data!.docs[index].get('comments').length;
+              return BlocProvider<ReactCommentCubit>(
+                create: (context) => ReactCommentCubit(),
+                child: BackState(
+                    Index: index,
+                    snapshot: snapshot,
+                    likes: likes,
+                    comments: comments),
+              );
+            }
           },
           itemCount: snapshot.data!.docs.length),
     );
   }
 }
+/*
+
+*/

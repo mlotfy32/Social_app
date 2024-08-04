@@ -14,6 +14,7 @@ import 'package:social_app/Features/Home/Notification/Presentation/View%20Model/
 import 'package:social_app/Features/Home/Presentation/View%20Model/isScroll/is_scroll_cubit.dart';
 import 'package:social_app/Features/Home/Presentation/View%20Model/react_comment/react_comment_cubit.dart';
 import 'package:social_app/Features/Home/Presentation/View%20Model/tabBar_Cubit/tab_bar_cubit.dart';
+import 'package:social_app/Features/Home/Presentation/View/Widgets/backState.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/customeButtomBar.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/customeForm.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/homeAppBar.dart';
@@ -119,23 +120,6 @@ class _HomeviewbodyState extends State<Homeviewbody> {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        // String post =
-                        //     snapshot.data!.docs[index].get('postState');
-                        // int likes =
-                        //     snapshot.data!.docs[index].get('likes').length;
-                        // int comments =
-                        //     snapshot.data!.docs[index].get('comments').length;
-                        // log('$post $index');
-                        // //     'post')
-                        // BlocProvider(
-                        //   create: (context) => ReactCommentCubit(),
-                        //   child: CustomePost(
-                        //       post: post,
-                        //       likes: likes,
-                        //       comments: comments,
-                        //       Index: index,
-                        //       snapshot: snapshot),
-                        // );
                         if (snapshot.data!.docs[index].get('postState') ==
                             'post') {
                           int likes =
@@ -200,12 +184,21 @@ class _HomeviewbodyState extends State<Homeviewbody> {
                               likes: likes,
                             ),
                           );
-                        } else {
+                        } else if (snapshot.data!.docs[index]
+                                .get('postState') ==
+                            'updated his cover photo') {
                           int likes =
                               snapshot.data!.docs[index].get('likes').length;
                           int comments =
                               snapshot.data!.docs[index].get('comments').length;
-                          return Text('data');
+                          return BlocProvider<ReactCommentCubit>(
+                            create: (context) => ReactCommentCubit(),
+                            child: BackState(
+                                Index: index,
+                                snapshot: snapshot,
+                                likes: likes,
+                                comments: comments),
+                          );
                         }
                       },
                       itemCount: snapshot.data!.docs.length);

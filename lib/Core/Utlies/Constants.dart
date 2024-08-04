@@ -13,6 +13,8 @@ class Constants {
       FirebaseFirestore.instance.collection('userPosts');
   CollectionReference search = FirebaseFirestore.instance.collection('search');
   CollectionReference Stores = FirebaseFirestore.instance.collection('Stores');
+  CollectionReference Profile =
+      FirebaseFirestore.instance.collection('Profile');
 
   /*
                          static   CollectionReference usersCollection =

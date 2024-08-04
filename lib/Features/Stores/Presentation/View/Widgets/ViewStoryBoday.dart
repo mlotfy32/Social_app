@@ -117,16 +117,19 @@ class Viewstoryboday extends StatelessWidget {
                                               ),
                                             ));
                                       },
-                                      child: CircleAvatar(
-                                          radius: 32,
-                                          backgroundColor:
-                                              AppColors.buttonColor,
-                                          child: CircleAvatar(
-                                            radius: 30,
-                                            backgroundImage: NetworkImage(
-                                              '${snapshot.data!.docs[index].get('store')}',
-                                            ),
-                                          )),
+                                      child: Hero(
+                                        tag: 'story-',
+                                        child: CircleAvatar(
+                                            radius: 32,
+                                            backgroundColor:
+                                                AppColors.buttonColor,
+                                            child: CircleAvatar(
+                                              radius: 30,
+                                              backgroundImage: NetworkImage(
+                                                '${snapshot.data!.docs[index].get('store')}',
+                                              ),
+                                            )),
+                                      ),
                                     ),
                                     Text(
                                       overflow: TextOverflow.ellipsis,

@@ -23,6 +23,8 @@ SharedPreferences? fristname;
 SharedPreferences? lastname;
 SharedPreferences? profilePic;
 SharedPreferences? backPic;
+SharedPreferences? emailPrfs;
+
 var ProfileImage;
 var BackImage;
 Future<void> main() async {
@@ -31,25 +33,11 @@ Future<void> main() async {
   lastname = await SharedPreferences.getInstance();
   profilePic = await SharedPreferences.getInstance();
   backPic = await SharedPreferences.getInstance();
-  ProfileImage = await profilePic!.get('profilePic');
-  BackImage = await backPic!.get('backPic');
-
-  if (ProfileImage == null) {
-    await profilePic!.setString('profilePic', Appassets.profile);
-  }
-  BackImage = await backPic!.get('backPic');
-  log('%%%%%%%%%%%%%%$BackImage');
-
-  if (BackImage == null) {
-    await backPic!.setString('backPic', Appassets.profile);
-  }
-  BackImage = await backPic!.get('backPic');
-  log('%%%%%%%%%%%222%%%$BackImage');
+  emailPrfs = await SharedPreferences.getInstance();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   Bloc.observer = Simpleobserver();
-
   runApp(const MyApp());
 }
 
@@ -69,9 +57,6 @@ class MyApp extends StatelessWidget {
         BlocProvider<AddProfileImageCubit>(
           create: (context) => AddProfileImageCubit(),
         ),
-        // BlocProvider<ReactCommentCubit>(
-        //   create: (context) => ReactCommentCubit(),
-        // ),
       ],
       child: GetMaterialApp(
           theme: ThemeData(
@@ -79,7 +64,6 @@ class MyApp extends StatelessWidget {
               fontFamily: 'NotoSerif'),
           debugShowCheckedModeBanner: false,
           home: Intro()
-          //Homeview()
           // Welcomeview(),
           ),
     );

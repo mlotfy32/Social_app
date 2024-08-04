@@ -141,6 +141,12 @@ class Postdetailes extends StatelessWidget {
                                               ),
                                             ],
                                             child: UpdateImage(
+                                              backPic: snapshot
+                                                          .data!.docs[Index]
+                                                          .get('postState') ==
+                                                      'updated his cover photo'
+                                                  ? true
+                                                  : false,
                                               ptofile: snapshot
                                                           .data!.docs[Index]
                                                           .get('postState') ==
@@ -158,7 +164,15 @@ class Postdetailes extends StatelessWidget {
                                                   ? snapshot.data!.docs[Index]
                                                       .get('imageUrl')
                                                   : snapshot.data!.docs[Index]
-                                                      .get('profilePic'),
+                                                              .get(
+                                                                  'postState') ==
+                                                          'updated his cover photo'
+                                                      ? snapshot
+                                                          .data!.docs[Index]
+                                                          .get('backPic')
+                                                      : snapshot
+                                                          .data!.docs[Index]
+                                                          .get('profilePic'),
                                               title: snapshot.data!.docs[Index]
                                                   .get('title'),
                                               id: id,

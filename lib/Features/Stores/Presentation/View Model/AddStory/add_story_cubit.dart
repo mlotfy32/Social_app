@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
 import 'package:bloc/bloc.dart';
@@ -46,6 +47,8 @@ class AddStoryCubit extends Cubit<AddStoryState> {
           'likes': [],
         });
         emit(AddStorySuccess(url: imageurl));
+        final AudioPlayer player = AudioPlayer();
+        player.play(AssetSource('done.wav'));
       }
     } catch (e) {
       emit(AddStoryFailure());
