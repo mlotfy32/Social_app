@@ -18,11 +18,13 @@ class Imagepoststate extends StatefulWidget {
       required this.Index,
       this.snapshot,
       required this.likes,
-      required this.comments});
+      required this.comments,
+      required this.share});
   final int Index;
   final dynamic snapshot;
   final int comments;
   final int likes;
+  final int share;
 
   @override
   State<Imagepoststate> createState() => _ImagepoststateState();
@@ -47,6 +49,7 @@ class _ImagepoststateState extends State<Imagepoststate> {
       child: Column(
         children: [
           Postdetailes(
+            edit: false,
             id: widget.snapshot.data!.docs[widget.Index].id,
             Index: widget.Index,
             snapshot: widget.snapshot,
@@ -105,6 +108,7 @@ class _ImagepoststateState extends State<Imagepoststate> {
               return Align(
                 alignment: Alignment.topLeft,
                 child: ReactComment(
+                  share: widget.share,
                   id: widget.snapshot.data!.docs[widget.Index].id,
                   likes: widget.likes,
                   snapshot: widget.snapshot,

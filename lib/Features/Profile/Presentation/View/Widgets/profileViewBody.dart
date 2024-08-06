@@ -28,7 +28,9 @@ import 'package:social_app/Features/Profile/Presentation/View/Widgets/rowIcon_Te
 import 'package:social_app/main.dart';
 
 class Profileviewbody extends StatefulWidget {
-  Profileviewbody({super.key});
+  Profileviewbody({
+    super.key,
+  });
 
   @override
   State<Profileviewbody> createState() => _ProfileviewbodyState();
@@ -161,11 +163,12 @@ class _ProfileviewbodyState extends State<Profileviewbody> {
                   int len = snapshot.data!.docs.length;
                   for (int i = 0; i < len; i++) {
                     String userId = snapshot.data!.docs[i].get('userId');
-
+                    int share = snapshot.data!.docs[i].get('share');
                     if (userId == Constants().userId) {
                       return BlocProvider<ReactCommentCubit>(
                         create: (context) => ReactCommentCubit(),
                         child: ProfilePostes(
+                          share: share,
                           snapshot: snapshot,
                         ),
                       );

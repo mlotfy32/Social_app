@@ -26,12 +26,14 @@ class UpdateImage extends StatefulWidget {
       required this.id,
       required this.image,
       required this.ptofile,
-      required this.backPic});
+      required this.backPic,
+      required this.repost});
   final String title;
   final String id;
   final String image;
   final bool ptofile;
   final bool backPic;
+  final bool repost;
 
   @override
   State<UpdateImage> createState() => _UpdateImageState();

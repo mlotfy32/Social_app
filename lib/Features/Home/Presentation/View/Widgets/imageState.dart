@@ -1,5 +1,6 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,11 +21,13 @@ class Imagestate extends StatefulWidget {
     this.snapshot,
     required this.likes,
     required this.comments,
+    required this.share,
   });
   final int Index;
   final int comments;
   final dynamic snapshot;
   final int likes;
+  final int share;
 
   @override
   State<Imagestate> createState() => _ImagestateState();
@@ -40,15 +43,26 @@ class _ImagestateState extends State<Imagestate> {
     super.initState();
   }
 
+  BoxDecoration norepost = BoxDecoration(
+      borderRadius: BorderRadius.circular(15), color: Colors.white10);
+  BoxDecoration repost = BoxDecoration(
+      border: Border.all(color: Colors.blueGrey, width: 1),
+      borderRadius: BorderRadius.circular(15));
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: Duration(seconds: 2),
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: Colors.white10),
+      padding: widget.snapshot.data!.docs[widget.Index].get('postState') ==
+              'repost this image'
+          ? EdgeInsets.all(2)
+          : EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: widget.snapshot.data!.docs[widget.Index].get('postState') ==
+              'repost this image'
+          ? repost
+          : norepost,
       child: Column(
         children: [
           Postdetailes(
+            edit: false,
             id: widget.snapshot.data!.docs[widget.Index].id,
             Index: widget.Index,
             snapshot: widget.snapshot,
@@ -90,20 +104,24 @@ class _ImagestateState extends State<Imagestate> {
                       fit: BoxFit.cover)),
             ),
           ),
-          BlocBuilder<ReactCommentCubit, ReactCommentState>(
-            builder: (context, state) {
-              return Align(
-                alignment: Alignment.topLeft,
-                child: ReactComment(
-                  comment: widget.comments,
-                  id: widget.snapshot.data!.docs[widget.Index].id,
-                  likes: widget.likes,
-                  Index: widget.Index,
-                  snapshot: widget.snapshot,
-                ),
-              );
-            },
-          )
+          widget.snapshot.data!.docs[widget.Index].get('postState') ==
+                  'repost this image'
+              ? SizedBox()
+              : BlocBuilder<ReactCommentCubit, ReactCommentState>(
+                  builder: (context, state) {
+                    return Align(
+                      alignment: Alignment.topLeft,
+                      child: ReactComment(
+                        share: widget.share,
+                        comment: widget.comments,
+                        id: widget.snapshot.data!.docs[widget.Index].id,
+                        likes: widget.likes,
+                        Index: widget.Index,
+                        snapshot: widget.snapshot,
+                      ),
+                    );
+                  },
+                )
         ],
       ),
     );

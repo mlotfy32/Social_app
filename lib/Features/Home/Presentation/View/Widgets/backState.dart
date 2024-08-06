@@ -16,11 +16,13 @@ class BackState extends StatefulWidget {
       required this.Index,
       required this.snapshot,
       required this.likes,
-      required this.comments});
+      required this.comments,
+      required this.share});
   final int Index;
   final snapshot;
   final int likes;
   final int comments;
+  final int share;
 
   @override
   State<BackState> createState() => _BackStateState();
@@ -46,6 +48,7 @@ class _BackStateState extends State<BackState> {
       child: Column(
         children: [
           Postdetailes(
+            edit: true,
             id: widget.snapshot.data!.docs[widget.Index].id,
             Index: widget.Index,
             snapshot: widget.snapshot,
@@ -104,6 +107,7 @@ class _BackStateState extends State<BackState> {
               return Align(
                 alignment: Alignment.topLeft,
                 child: ReactComment(
+                  share: widget.share,
                   id: widget.snapshot.data!.docs[widget.Index].id,
                   likes: widget.likes,
                   snapshot: widget.snapshot,

@@ -14,11 +14,16 @@ import 'package:social_app/Features/Home/Presentation/View%20Model/addTitle/add_
 import 'package:social_app/Features/Welcme/Presentation/View/Widgets/customeButton.dart';
 
 class EditPost extends StatefulWidget {
-  EditPost({super.key, this.title, required this.Index, required this.id});
+  EditPost(
+      {super.key,
+      this.title,
+      required this.Index,
+      required this.id,
+      this.snapshot});
   final title;
   final int Index;
   final String id;
-
+  final snapshot;
   @override
   State<EditPost> createState() => _EditPostState();
 }

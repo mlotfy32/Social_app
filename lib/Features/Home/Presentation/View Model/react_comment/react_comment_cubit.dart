@@ -8,6 +8,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:meta/meta.dart';
 import 'package:social_app/Core/Utlies/Constants.dart';
+import 'package:social_app/Core/Utlies/Functions.dart';
 import 'package:social_app/main.dart';
 
 part 'react_comment_state.dart';
@@ -27,10 +28,10 @@ class ReactCommentCubit extends Cubit<ReactCommentState> {
     await Constants().usersPosts.doc(id).get().then((value) {
       likes.addAll(value.get('likes'));
     });
-    log('map likes = ${likes}');
     try {
       if (likes.isEmpty) {
-        log('add');
+        final AudioPlayer player = AudioPlayer();
+        player.play(AssetSource('like.wav'));
         await Constants().usersPosts.doc(id).update({
           'likes': [
             {
@@ -38,8 +39,7 @@ class ReactCommentCubit extends Cubit<ReactCommentState> {
             }
           ],
         });
-        final AudioPlayer player = AudioPlayer();
-        player.play(AssetSource('like.wav'));
+
         emit(updateReactComment(isLiked: true, index: index));
 
         //notempty
@@ -111,33 +111,106 @@ class ReactCommentCubit extends Cubit<ReactCommentState> {
     final player = AudioPlayer();
     await player.play(AssetSource('done.wav'));
   }
-  // setReact(
-  //     {required String id,
-  //     required snapshot,
-  //     required userId,
-  //     required int index}) async {
-  //   List likes = [];
-  //   await Constants().usersPosts.doc(id).get().then((value) {
-  //     likes.addAll(value.get('likes'));
-  //     log('surrent $likes');
-  //   });
-  //   if (likes.contains(userId)) {
-  //     emit(updateReactComment(isLiked: false, index: index));
-  //     likes.remove(userId);
-  //     await Constants().usersPosts.doc(id).update({
-  //       'likes': likes,
-  //     });
-  //   } else {
-  //     emit(updateReactComment(isLiked: true, index: index));
-  //     likes.add(userId);
-  //     await Constants().usersPosts.doc(id).update({
-  //       'likes': likes,
-  //     });
-  //   }
-  //   await Constants().usersPosts.doc(id).get().then((value) {
-  //     log('updated ${value.get('likes')}');
-  //   });
-  // }
+
+  shareImage(
+      {required String id,
+      required dynamic oldTime,
+      required String name_1,
+      required String name_2,
+      required String profileUrl,
+      required String title,
+      required String newState,
+      required String imageUrl,
+      required String oldUserid,
+      required String oldState}) async {
+    try {
+      helper.loading();
+      var name1 = await fristname!.get('fristName');
+      var name2 = await lastname!.get('lastName');
+      var profilePi = await profilePic!.get('profilePic');
+      String userId = Constants().userId;
+      var data = await Constants().usersPosts.doc(id).get();
+      int share = data.get('share');
+      await Constants().usersPosts.doc(id).update({'share': share + 1});
+      await Constants().usersPosts.add({
+        'oldState': oldState,
+        'fristName': name1,
+        'lastName': name2,
+        'oldName1': name_1,
+        'oldName2': name_2,
+        'oldUserid': oldUserid,
+        'userId': userId,
+        'newState': newState,
+        'title': title,
+        'oldId': id,
+        'postState': 'repost this image',
+        'imageUrl': imageUrl,
+        'profilePic': '$profilePi',
+        'backPic': '$backPic',
+        'oldTime': '$oldTime',
+        'time': '${DateTime.now()}',
+        'likes': [],
+        'share': 0,
+        'comments': []
+      });
+      final AudioPlayer player = AudioPlayer();
+      player.play(AssetSource('done.wav'));
+      Get.back();
+      Get.back();
+    } catch (e) {
+      Get.back();
+    }
+  }
+
+  sharePost(
+      {required String id,
+      required dynamic oldTime,
+      required String name_1,
+      required String name_2,
+      required String profileUrl,
+      required String oldtitle,
+      required String newtitle,
+      required String newState,
+      required String oldUserid,
+      required String oldState}) async {
+    try {
+      helper.loading();
+      var name1 = await fristname!.get('fristName');
+      var name2 = await lastname!.get('lastName');
+      var profilePi = await profilePic!.get('profilePic');
+      String userId = Constants().userId;
+      var data = await Constants().usersPosts.doc(id).get();
+      int share = data.get('share');
+      await Constants().usersPosts.doc(id).update({'share': share + 1});
+      await Constants().usersPosts.add({
+        'oldState': oldState,
+        'fristName': name1,
+        'lastName': name2,
+        'oldName1': name_1,
+        'oldName2': name_2,
+        'oldUserid': oldUserid,
+        'userId': userId,
+        'newState': newState,
+        'oldtitle': oldtitle,
+        'newtitle': newtitle,
+        'oldId': id,
+        'postState': 'repost this post',
+        'profilePic': '$profilePi',
+        'backPic': '$backPic',
+        'oldTime': '$oldTime',
+        'time': '${DateTime.now()}',
+        'likes': [],
+        'share': 0,
+        'comments': []
+      });
+      final AudioPlayer player = AudioPlayer();
+      player.play(AssetSource('done.wav'));
+      Get.back();
+      Get.back();
+    } catch (e) {
+      Get.back();
+    }
+  }
 
   isLike({required snabshot, required int Index, required userId}) async {
     List likes = [];

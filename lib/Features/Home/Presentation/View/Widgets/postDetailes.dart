@@ -25,11 +25,15 @@ import 'package:social_app/Features/Welcme/Presentation/View/Widgets/customeButt
 
 class Postdetailes extends StatelessWidget {
   Postdetailes(
-      {super.key, this.snapshot, required this.Index, required this.id});
+      {super.key,
+      this.snapshot,
+      required this.Index,
+      required this.id,
+      required this.edit});
   final dynamic snapshot;
   final int Index;
   final String id;
-
+  final bool edit;
   @override
   Widget build(BuildContext context) {
     String _selectedOption = AppStrings.options[0];
@@ -87,7 +91,7 @@ class Postdetailes extends StatelessWidget {
                         SizedBox(
                           width: helper.getwidth(0.55, context),
                           child: Text(
-                            '${snapshot.data!.docs[Index].get('aboutPost')}',
+                            '${edit == true && snapshot.data!.docs[Index].get('postState') == 'repost this image' || snapshot.data!.docs[Index].get('postState') == 'repost this post' ? snapshot.data!.docs[Index].get('newState') : edit == false && snapshot.data!.docs[Index].get('postState') == 'repost this image' || snapshot.data!.docs[Index].get('postState') == 'repost this post' ? snapshot.data!.docs[Index].get('oldState') : snapshot.data!.docs[Index].get('aboutPost')}',
                             style: Fontstylesmanager.welcomeTitleStyle.copyWith(
                                 color: Colors.blueGrey,
                                 fontSize: 12,
@@ -99,111 +103,202 @@ class Postdetailes extends StatelessWidget {
                           alignment: Alignment.topLeft,
                           child: Text(
                             overflow: TextOverflow.ellipsis,
-                            '${Jiffy.parse(snapshot.data!.docs[Index].get('time')).fromNow()}',
+                            '${edit == true && snapshot.data!.docs[Index].get('postState') == 'repost this image' || snapshot.data!.docs[Index].get('postState') == 'repost this post' ? Jiffy.parse(snapshot.data!.docs[Index].get('time')).fromNow() : edit == false && snapshot.data!.docs[Index].get('postState') == 'repost this image' || snapshot.data!.docs[Index].get('postState') == 'repost this post' ? Jiffy.parse(snapshot.data!.docs[Index].get('oldTime')).fromNow() : Jiffy.parse(snapshot.data!.docs[Index].get('time')).fromNow()}',
                           ),
                         )
                       ]),
-                  PopupMenuButton<String>(
-                    onSelected: (String result) {
-                      _selectedOption = result;
-                      log('$_selectedOption');
-                    },
-                    icon: Icon(FontAwesomeIcons.ellipsis, color: Colors.white),
-                    itemBuilder: (BuildContext context) => Constants().userId ==
-                            snapshot.data!.docs[Index].get('userId')
-                        ? <PopupMenuEntry<String>>[
-                            PopupMenuItem<String>(
-                              onTap: () {
-                                Get.bottomSheet(
-                                    isScrollControlled: true,
-                                    snapshot.data!.docs[Index]
-                                                .get('postState') ==
-                                            'post'
-                                        ? BlocProvider<AddTitleCubit>(
-                                            create: (context) =>
-                                                AddTitleCubit(),
-                                            child: EditPost(
-                                              Index: Index,
-                                              id: id,
-                                              title: snapshot.data!.docs[Index]
-                                                  .get('title'),
-                                            ),
-                                          )
-                                        : MultiBlocProvider(
-                                            providers: [
-                                              BlocProvider<AddTitleCubit>(
-                                                create: (context) =>
-                                                    AddTitleCubit(),
-                                              ),
-                                              BlocProvider<AddImageCubit>(
-                                                create: (context) =>
-                                                    AddImageCubit(),
-                                              ),
-                                            ],
-                                            child: UpdateImage(
-                                              backPic: snapshot
-                                                          .data!.docs[Index]
-                                                          .get('postState') ==
-                                                      'updated his cover photo'
-                                                  ? true
-                                                  : false,
-                                              ptofile: snapshot
-                                                          .data!.docs[Index]
-                                                          .get('postState') ==
-                                                      'update his profile picture'
-                                                  ? true
-                                                  : false,
-                                              image: snapshot.data!.docs[Index]
-                                                              .get(
-                                                                  'postState') ==
-                                                          'image' ||
-                                                      snapshot.data!.docs[Index]
-                                                              .get(
-                                                                  'postState') ==
-                                                          'postimage'
-                                                  ? snapshot.data!.docs[Index]
-                                                      .get('imageUrl')
-                                                  : snapshot.data!.docs[Index]
-                                                              .get(
-                                                                  'postState') ==
-                                                          'updated his cover photo'
-                                                      ? snapshot
-                                                          .data!.docs[Index]
-                                                          .get('backPic')
-                                                      : snapshot
-                                                          .data!.docs[Index]
-                                                          .get('profilePic'),
-                                              title: snapshot.data!.docs[Index]
-                                                  .get('title'),
-                                              id: id,
-                                            ),
-                                          ));
-                              },
-                              value: AppStrings.options[0],
-                              child: Text('${AppStrings.options[0]}',
-                                  style: Fontstylesmanager.welcomeSubTitleStyle
-                                      .copyWith(
-                                          fontSize: 15, color: Colors.black)),
-                            ),
-                            PopupMenuItem<String>(
-                              onTap: () async {
-                                helper.loading();
-                                await Constants().usersPosts.doc(id).delete();
-                                final player = AudioPlayer();
-                                await player.play(AssetSource('done.wav'));
-                                Get.back();
-                              },
-                              value: AppStrings.options[1],
-                              child: Text(
-                                '${AppStrings.options[1]}',
-                                style: Fontstylesmanager.welcomeSubTitleStyle
-                                    .copyWith(
-                                        fontSize: 15, color: Colors.black),
-                              ),
-                            ),
-                          ]
-                        : [],
-                  ),
+                  snapshot.data!.docs[Index].get('postState') ==
+                              'repost this image' ||
+                          snapshot.data!.docs[Index].get('postState') ==
+                                  'repost this post' &&
+                              edit == false
+                      ? SizedBox()
+                      : PopupMenuButton<String>(
+                          onSelected: (String result) {
+                            _selectedOption = result;
+                            log('$_selectedOption');
+                          },
+                          icon: Icon(FontAwesomeIcons.ellipsis,
+                              color: Colors.white),
+                          itemBuilder: (BuildContext context) => Constants()
+                                      .userId ==
+                                  snapshot.data!.docs[Index].get('userId')
+                              ? <PopupMenuEntry<String>>[
+                                  PopupMenuItem<String>(
+                                    onTap: () {
+                                      Get.bottomSheet(
+                                          isScrollControlled: true,
+                                          snapshot.data!.docs[Index]
+                                                      .get('postState') ==
+                                                  'post'
+                                              ? BlocProvider<AddTitleCubit>(
+                                                  create: (context) =>
+                                                      AddTitleCubit(),
+                                                  child: EditPost(
+                                                    snapshot: snapshot,
+                                                    Index: Index,
+                                                    id: id,
+                                                    title: snapshot
+                                                        .data!.docs[Index]
+                                                        .get('title'),
+                                                  ),
+                                                )
+                                              : MultiBlocProvider(
+                                                  providers: [
+                                                    BlocProvider<AddTitleCubit>(
+                                                      create: (context) =>
+                                                          AddTitleCubit(),
+                                                    ),
+                                                    BlocProvider<AddImageCubit>(
+                                                      create: (context) =>
+                                                          AddImageCubit(),
+                                                    ),
+                                                  ],
+                                                  child: UpdateImage(
+                                                    repost: snapshot.data!
+                                                                .docs[Index]
+                                                                .get(
+                                                                    'postState') ==
+                                                            'repost this image'
+                                                        ? true
+                                                        : false,
+                                                    backPic: snapshot.data!
+                                                                .docs[Index]
+                                                                .get(
+                                                                    'postState') ==
+                                                            'updated his cover photo'
+                                                        ? true
+                                                        : false,
+                                                    ptofile: snapshot.data!
+                                                                .docs[Index]
+                                                                .get(
+                                                                    'postState') ==
+                                                            'update his profile picture'
+                                                        ? true
+                                                        : false,
+                                                    image: snapshot.data!
+                                                                    .docs[Index]
+                                                                    .get(
+                                                                        'postState') ==
+                                                                'image' ||
+                                                            snapshot.data!
+                                                                    .docs[Index]
+                                                                    .get(
+                                                                        'postState') ==
+                                                                'postimage'
+                                                        ? snapshot
+                                                            .data!.docs[Index]
+                                                            .get('imageUrl')
+                                                        : snapshot.data!
+                                                                    .docs[Index]
+                                                                    .get(
+                                                                        'postState') ==
+                                                                'updated his cover photo'
+                                                            ? snapshot.data!
+                                                                .docs[Index]
+                                                                .get('backPic')
+                                                            : snapshot.data!
+                                                                .docs[Index]
+                                                                .get('profilePic'),
+                                                    title: snapshot
+                                                        .data!.docs[Index]
+                                                        .get('title'),
+                                                    id: id,
+                                                  ),
+                                                ));
+                                    },
+                                    value: AppStrings.options[0],
+                                    child: Text('${AppStrings.options[0]}',
+                                        style: Fontstylesmanager
+                                            .welcomeSubTitleStyle
+                                            .copyWith(
+                                                fontSize: 15,
+                                                color: Colors.black)),
+                                  ),
+                                  PopupMenuItem<String>(
+                                    onTap: () async {
+                                      if (snapshot.data!.docs[Index]
+                                              .get('postState') ==
+                                          'repost this image') {
+                                        helper.loading();
+                                        List share = [];
+                                        await Constants()
+                                            .usersPosts
+                                            .doc(snapshot.data!.docs[Index]
+                                                .get('oldId'))
+                                            .get()
+                                            .then((element) {
+                                          share.add(element.get('share'));
+                                        });
+                                        await Constants()
+                                            .usersPosts
+                                            .doc(snapshot.data!.docs[Index]
+                                                .get('oldId'))
+                                            .update({
+                                          'share': share.first - 1,
+                                        });
+                                        await Constants()
+                                            .usersPosts
+                                            .doc(id)
+                                            .delete();
+                                        final player = AudioPlayer();
+                                        await player
+                                            .play(AssetSource('done.wav'));
+                                        Get.back();
+                                      }
+                                      if (snapshot.data!.docs[Index]
+                                              .get('postState') ==
+                                          'repost this post') {
+                                        helper.loading();
+                                        List share = [];
+                                        await Constants()
+                                            .usersPosts
+                                            .doc(snapshot.data!.docs[Index]
+                                                .get('oldId'))
+                                            .get()
+                                            .then((element) {
+                                          share.add(element.get('share'));
+                                        });
+                                        await Constants()
+                                            .usersPosts
+                                            .doc(snapshot.data!.docs[Index]
+                                                .get('oldId'))
+                                            .update({
+                                          'share': share.first - 1,
+                                        });
+                                        await Constants()
+                                            .usersPosts
+                                            .doc(id)
+                                            .delete();
+                                        final player = AudioPlayer();
+                                        await player
+                                            .play(AssetSource('done.wav'));
+                                        Get.back();
+                                      } else {
+                                        helper.loading();
+                                        await Constants()
+                                            .usersPosts
+                                            .doc(id)
+                                            .delete();
+                                        final player = AudioPlayer();
+                                        await player
+                                            .play(AssetSource('done.wav'));
+                                        Get.back();
+                                      }
+                                    },
+                                    value: AppStrings.options[1],
+                                    child: Text(
+                                      '${AppStrings.options[1]}',
+                                      style: Fontstylesmanager
+                                          .welcomeSubTitleStyle
+                                          .copyWith(
+                                              fontSize: 15,
+                                              color: Colors.black),
+                                    ),
+                                  ),
+                                ]
+                              : [],
+                        ),
                   SizedBox(height: 20),
                 ],
               ),

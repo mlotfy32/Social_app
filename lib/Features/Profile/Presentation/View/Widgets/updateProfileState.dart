@@ -17,11 +17,13 @@ class Updateprofilestate extends StatefulWidget {
       required this.snapshot,
       required this.Index,
       required this.likes,
-      required this.comments});
+      required this.comments,
+      required this.share});
   final snapshot;
   final int Index;
   final int comments;
   final int likes;
+  final int share;
 
   @override
   State<Updateprofilestate> createState() => _UpdateprofilestateState();
@@ -49,6 +51,7 @@ class _UpdateprofilestateState extends State<Updateprofilestate> {
       child: Column(
         children: [
           Postdetailes(
+            edit: true,
             id: widget.snapshot.data!.docs[widget.Index].id,
             Index: widget.Index,
             snapshot: widget.snapshot,
@@ -100,6 +103,7 @@ class _UpdateprofilestateState extends State<Updateprofilestate> {
               return Align(
                 alignment: Alignment.topLeft,
                 child: ReactComment(
+                  share: widget.share,
                   id: widget.snapshot.data!.docs[widget.Index].id,
                   likes: widget.likes,
                   Index: widget.Index,

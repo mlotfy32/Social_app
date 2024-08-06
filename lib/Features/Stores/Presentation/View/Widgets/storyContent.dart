@@ -42,6 +42,8 @@ class _StoryContentState extends State<StoryContent> {
   Widget build(BuildContext context) {
     bool liked = false;
     Object? profile = profilePic!.getString('profilePic');
+    // log('${Jiffy.parse(widget.time).fromNow().}');
+
     return Container(
       color: Colors.blueGrey[900],
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),

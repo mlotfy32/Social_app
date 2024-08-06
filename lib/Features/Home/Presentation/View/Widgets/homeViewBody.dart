@@ -19,10 +19,13 @@ import 'package:social_app/Features/Home/Presentation/View%20Model/tabBar_Cubit/
 import 'package:social_app/Features/Home/Presentation/View/Widgets/backState.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/customeButtomBar.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/customeForm.dart';
+import 'package:social_app/Features/Home/Presentation/View/Widgets/customeReact.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/homeAppBar.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/imagePostState.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/imageState.dart';
+import 'package:social_app/Features/Home/Presentation/View/Widgets/postDetailes.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/postState.dart';
+import 'package:social_app/Features/Home/Presentation/View/Widgets/react_comment.dart';
 import 'package:social_app/Features/Home/Presentation/View/Widgets/searchBody.dart';
 import 'package:social_app/Features/Profile/Presentation/View/Widgets/updateProfileState.dart';
 import 'package:social_app/Features/Stores/Presentation/View/View_Story.dart';
@@ -137,9 +140,11 @@ class _HomeviewbodyState extends State<Homeviewbody> {
                               snapshot.data!.docs[index].get('likes').length;
                           int comments =
                               snapshot.data!.docs[index].get('comments').length;
+                          int share = snapshot.data!.docs[index].get('share');
                           return BlocProvider<ReactCommentCubit>(
                             create: (context) => ReactCommentCubit(),
                             child: Poststate(
+                              share: share,
                               likes: likes,
                               Index: index,
                               comments: comments,
@@ -153,9 +158,11 @@ class _HomeviewbodyState extends State<Homeviewbody> {
                               snapshot.data!.docs[index].get('likes').length;
                           int comments =
                               snapshot.data!.docs[index].get('comments').length;
+                          int share = snapshot.data!.docs[index].get('share');
                           return BlocProvider<ReactCommentCubit>(
                             create: (context) => ReactCommentCubit(),
                             child: Imagestate(
+                              share: share,
                               likes: likes,
                               snapshot: snapshot,
                               comments: comments,
@@ -169,9 +176,11 @@ class _HomeviewbodyState extends State<Homeviewbody> {
                               snapshot.data!.docs[index].get('likes').length;
                           int comments =
                               snapshot.data!.docs[index].get('comments').length;
+                          int share = snapshot.data!.docs[index].get('share');
                           return BlocProvider<ReactCommentCubit>(
                             create: (context) => ReactCommentCubit(),
                             child: Imagepoststate(
+                              share: share,
                               likes: likes,
                               Index: index,
                               snapshot: snapshot,
@@ -185,10 +194,11 @@ class _HomeviewbodyState extends State<Homeviewbody> {
                               snapshot.data!.docs[index].get('likes').length;
                           int comments =
                               snapshot.data!.docs[index].get('comments').length;
-
+                          int share = snapshot.data!.docs[index].get('share');
                           return BlocProvider<ReactCommentCubit>(
                             create: (context) => ReactCommentCubit(),
                             child: Updateprofilestate(
+                              share: share,
                               snapshot: snapshot,
                               comments: comments,
                               Index: index,
@@ -202,13 +212,132 @@ class _HomeviewbodyState extends State<Homeviewbody> {
                               snapshot.data!.docs[index].get('likes').length;
                           int comments =
                               snapshot.data!.docs[index].get('comments').length;
+                          int share = snapshot.data!.docs[index].get('share');
                           return BlocProvider<ReactCommentCubit>(
                             create: (context) => ReactCommentCubit(),
                             child: BackState(
+                                share: share,
                                 Index: index,
                                 snapshot: snapshot,
                                 likes: likes,
                                 comments: comments),
+                          );
+                        } else if (snapshot.data!.docs[index]
+                                .get('postState') ==
+                            'repost this image') {
+                          int likes =
+                              snapshot.data!.docs[index].get('likes').length;
+                          int comments =
+                              snapshot.data!.docs[index].get('comments').length;
+                          int share = snapshot.data!.docs[index].get('share');
+                          return Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.white10),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 5),
+                            child: Column(
+                              children: [
+                                Postdetailes(
+                                    edit: true,
+                                    Index: index,
+                                    snapshot: snapshot,
+                                    id: snapshot.data!.docs[index].id),
+                                snapshot.data!.docs[index].get('title') == ''
+                                    ? SizedBox()
+                                    : Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          textAlign: TextAlign.start,
+                                          ' ${snapshot.data!.docs[index].get('title')}',
+                                          style: Fontstylesmanager
+                                              .welcomeTitleStyle
+                                              .copyWith(fontSize: 20),
+                                        ),
+                                      ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5.0),
+                                  child: Divider(
+                                    color: Colors.blueGrey[800],
+                                  ),
+                                ),
+                                Imagestate(
+                                    Index: index,
+                                    likes: likes,
+                                    snapshot: snapshot,
+                                    comments: comments,
+                                    share: share),
+                                BlocProvider<ReactCommentCubit>(
+                                  create: (context) => ReactCommentCubit(),
+                                  child: Customereact(
+                                    share: share,
+                                    likes: likes,
+                                    comments: comments,
+                                    index: index,
+                                    snapshot: snapshot,
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        } else if (snapshot.data!.docs[index]
+                                .get('postState') ==
+                            'repost this post') {
+                          int likes =
+                              snapshot.data!.docs[index].get('likes').length;
+                          int comments =
+                              snapshot.data!.docs[index].get('comments').length;
+                          int share = snapshot.data!.docs[index].get('share');
+                          return Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.white10),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 5),
+                            child: Column(
+                              children: [
+                                Postdetailes(
+                                    edit: true,
+                                    Index: index,
+                                    snapshot: snapshot,
+                                    id: snapshot.data!.docs[index].id),
+                                snapshot.data!.docs[index].get('newtitle') == ''
+                                    ? SizedBox()
+                                    : Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          textAlign: TextAlign.start,
+                                          ' ${snapshot.data!.docs[index].get('newtitle')}',
+                                          style: Fontstylesmanager
+                                              .welcomeTitleStyle
+                                              .copyWith(fontSize: 20),
+                                        ),
+                                      ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5.0),
+                                  child: Divider(
+                                    color: Colors.blueGrey[800],
+                                  ),
+                                ),
+                                Poststate(
+                                    Index: index,
+                                    snapshot: snapshot,
+                                    likes: likes,
+                                    comments: comments,
+                                    share: share),
+                                BlocProvider<ReactCommentCubit>(
+                                  create: (context) => ReactCommentCubit(),
+                                  child: Customereact(
+                                      snapshot: snapshot,
+                                      share: share,
+                                      likes: likes,
+                                      comments: comments,
+                                      index: index),
+                                )
+                              ],
+                            ),
                           );
                         }
                       },

@@ -41,6 +41,7 @@ class SetPostCubit extends Cubit<SetPostState> {
         'profilePic': '$profilePi',
         'backPic': '$backPic',
         'time': '${DateTime.now()}',
+        'share': 0,
         'likes': [],
         'comments': []
       });
@@ -80,6 +81,7 @@ class SetPostCubit extends Cubit<SetPostState> {
         'backPic': '$backPic',
         'time': '${DateTime.now()}',
         'likes': [],
+        'share': 0,
         'comments': []
       });
       emit(SetPostSuccess());
@@ -111,6 +113,7 @@ class SetPostCubit extends Cubit<SetPostState> {
         'profilePic': '$profilePi',
         'backPic': '$backPic',
         'time': '${DateTime.now()}',
+        'share': 0,
         'likes': [],
         'comments': []
       });

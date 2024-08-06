@@ -49,4 +49,5 @@ abstract class AppStrings {
   static String update = 'Update';
   static String myStory = 'My Story';
   static String deletestory = 'Delete Story';
+  static String repost = 'Repost';
 }

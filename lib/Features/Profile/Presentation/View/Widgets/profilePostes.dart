@@ -10,8 +10,10 @@ import 'package:social_app/Features/Home/Presentation/View/Widgets/postState.dar
 import 'package:social_app/Features/Profile/Presentation/View/Widgets/updateProfileState.dart';
 
 class ProfilePostes extends StatelessWidget {
-  const ProfilePostes({super.key, required this.snapshot});
+  const ProfilePostes({super.key, required this.snapshot, required this.share});
   final AsyncSnapshot<QuerySnapshot<Object?>> snapshot;
+  final int share;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,6 +38,7 @@ class ProfilePostes extends StatelessWidget {
               return BlocProvider<ReactCommentCubit>(
                 create: (context) => ReactCommentCubit(),
                 child: Poststate(
+                  share: share,
                   likes: likes,
                   comments: comments,
                   Index: index,
@@ -45,10 +48,12 @@ class ProfilePostes extends StatelessWidget {
             } else if (snapshot.data!.docs[index].get('postState') == 'image') {
               int likes = snapshot.data!.docs[index].get('likes').length;
               int comments = snapshot.data!.docs[index].get('comments').length;
+              int share = snapshot.data!.docs[index].get('share');
               return BlocProvider<ReactCommentCubit>(
                 create: (context) => ReactCommentCubit(),
                 child: Imagestate(
                   likes: likes,
+                  share: share,
                   comments: comments,
                   snapshot: snapshot,
                   Index: index,
@@ -57,10 +62,12 @@ class ProfilePostes extends StatelessWidget {
             } else if (snapshot.data!.docs[index].get('postState') ==
                 'postimage') {
               int likes = snapshot.data!.docs[index].get('likes').length;
+              int share = snapshot.data!.docs[index].get('share');
               int comments = snapshot.data!.docs[index].get('comments').length;
               return BlocProvider<ReactCommentCubit>(
                 create: (context) => ReactCommentCubit(),
                 child: Imagepoststate(
+                  share: share,
                   comments: comments,
                   likes: likes,
                   Index: index,
@@ -71,7 +78,10 @@ class ProfilePostes extends StatelessWidget {
                 'update his profile picture') {
               int likes = snapshot.data!.docs[index].get('likes').length;
               int comments = snapshot.data!.docs[index].get('comments').length;
+              int share = snapshot.data!.docs[index].get('share');
+
               return Updateprofilestate(
+                share: share,
                 snapshot: snapshot,
                 comments: comments,
                 Index: index,
@@ -80,9 +90,11 @@ class ProfilePostes extends StatelessWidget {
             } else {
               int likes = snapshot.data!.docs[index].get('likes').length;
               int comments = snapshot.data!.docs[index].get('comments').length;
+              int share = snapshot.data!.docs[index].get('share');
               return BlocProvider<ReactCommentCubit>(
                 create: (context) => ReactCommentCubit(),
                 child: BackState(
+                    share: share,
                     Index: index,
                     snapshot: snapshot,
                     likes: likes,

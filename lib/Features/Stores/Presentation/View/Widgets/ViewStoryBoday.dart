@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:social_app/Core/Utlies/AppAssets.dart';
 import 'package:social_app/Core/Utlies/AppColors.dart';
@@ -87,66 +88,70 @@ class Viewstoryboday extends StatelessWidget {
                       child: ListView.builder(
                           itemCount: snapshot.data!.docs.length,
                           scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) => SizedBox(
-                                width: 70,
-                                child: Column(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        Get.bottomSheet(
-                                            isScrollControlled: true,
-                                            BlocProvider<AddLikeCubit>(
-                                              create: (context) =>
-                                                  AddLikeCubit(),
-                                              child: StoryContent(
-                                                userId: snapshot
-                                                    .data!.docs[index]
-                                                    .get('userId'),
-                                                likes: snapshot
-                                                    .data!.docs[index]
-                                                    .get('likes'),
-                                                id: snapshot
-                                                    .data!.docs[index].id,
-                                                Index: index,
-                                                Url: snapshot.data!.docs[index]
-                                                    .get('store'),
-                                                time: snapshot.data!.docs[index]
-                                                    .get('time'),
-                                                name:
-                                                    '${snapshot.data!.docs[index].get('fristName')} ${snapshot.data!.docs[index].get('lastName')}',
-                                              ),
-                                            ));
-                                      },
-                                      child: Hero(
-                                        tag: 'story-',
-                                        child: CircleAvatar(
-                                            radius: 32,
-                                            backgroundColor:
-                                                AppColors.buttonColor,
-                                            child: CircleAvatar(
-                                              radius: 30,
-                                              backgroundImage: NetworkImage(
-                                                '${snapshot.data!.docs[index].get('store')}',
-                                              ),
-                                            )),
-                                      ),
+                          itemBuilder: (context, index) {
+                            if (Jiffy.parse(
+                                        snapshot.data!.docs[index].get('time'))
+                                    .hour >=
+                                24) {
+                              var id = snapshot.data!.docs[index].id;
+                              Constants().Stores.doc('$id').delete();
+                            }
+                            return SizedBox(
+                              width: 70,
+                              child: Column(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      Get.bottomSheet(
+                                          isScrollControlled: true,
+                                          BlocProvider<AddLikeCubit>(
+                                            create: (context) => AddLikeCubit(),
+                                            child: StoryContent(
+                                              userId: snapshot.data!.docs[index]
+                                                  .get('userId'),
+                                              likes: snapshot.data!.docs[index]
+                                                  .get('likes'),
+                                              id: snapshot.data!.docs[index].id,
+                                              Index: index,
+                                              Url: snapshot.data!.docs[index]
+                                                  .get('store'),
+                                              time: snapshot.data!.docs[index]
+                                                  .get('time'),
+                                              name:
+                                                  '${snapshot.data!.docs[index].get('fristName')} ${snapshot.data!.docs[index].get('lastName')}',
+                                            ),
+                                          ));
+                                    },
+                                    child: Hero(
+                                      tag: 'story-',
+                                      child: CircleAvatar(
+                                          radius: 32,
+                                          backgroundColor:
+                                              AppColors.buttonColor,
+                                          child: CircleAvatar(
+                                            radius: 30,
+                                            backgroundImage: NetworkImage(
+                                              '${snapshot.data!.docs[index].get('store')}',
+                                            ),
+                                          )),
                                     ),
-                                    Text(
-                                      overflow: TextOverflow.ellipsis,
-                                      snapshot.data!.docs[index]
-                                                  .get('userId') ==
-                                              Constants().userId
-                                          ? AppStrings.myStory
-                                          : '${snapshot.data!.docs[index].get('fristName')} ${snapshot.data!.docs[index].get('lastName')}',
-                                      style: Fontstylesmanager
-                                          .welcomeSubTitleStyle
-                                          .copyWith(
-                                              fontSize: 15,
-                                              color: Colors.white70),
-                                    )
-                                  ],
-                                ),
-                              )),
+                                  ),
+                                  Text(
+                                    overflow: TextOverflow.ellipsis,
+                                    snapshot.data!.docs[index].get('userId') ==
+                                            Constants().userId
+                                        ? AppStrings.myStory
+                                        : '${snapshot.data!.docs[index].get('fristName')} ${snapshot.data!.docs[index].get('lastName')}',
+                                    style: Fontstylesmanager
+                                        .welcomeSubTitleStyle
+                                        .copyWith(
+                                            fontSize: 15,
+                                            color: Colors.white70),
+                                  )
+                                ],
+                              ),
+                            );
+                          }),
                     ),
                   ),
                 ),
